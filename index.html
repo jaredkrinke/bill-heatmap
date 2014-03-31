@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Bill Heatmap</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/periodic-task.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <table id="bills">
+        <thead><tr><td>Paid</td><td>Bill</td><td>Last paid</td><td>Due date</td><td>Edit</td></tr></thead>
+        <tbody>
+            <tr id="template"><td><input type="checkbox" /></td><td>Name</td><td>4/30/14</td><td>5/30/14</td><td>Edit</td></tr>
+            <tr id="editTemplate">
+                <td><input type="checkbox" disabled="disabled" /></td>
+                <td><input id="editName" type="text" /></td>
+                <td>
+                    <select id="editPeriod">
+                        <option>Weekly</option>
+                        <option>Biweekly</option>
+                        <option>Monthly</option>
+                        <option>Bimonthly</option>
+                        <option>Semiannual</option>
+                        <option>Annual</option>
+                    </select>
+                </td>
+                <td><input id="editDueDate" type="text" /></td>
+                <td>Save</td>
+            </tr>
+            <tr id="hint"><td colspan="5">Add a bill...</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>
