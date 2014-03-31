@@ -14,40 +14,18 @@
         editTemplate.className = null;
     };
 
-    var periodNameToPeriod = function (periodName) {
-        switch (periodName) {
-            case 'Weekly':
-                return PeriodicTask.period.oneWeek;
-                break;
-
-            case 'Biweekly':
-                return PeriodicTask.period.twoWeeks;
-                break;
-
-            case 'Monthly':
-                return PeriodicTask.period.oneMonth;
-                break;
-
-            case 'Bimonthly':
-                return PeriodicTask.period.twoMonths;
-                break;
-
-            case 'Semiannual':
-                return PeriodicTask.period.sixMonths;
-                break;
-
-            case 'Annual':
-                return PeriodicTask.period.oneYear;
-                break;
-
-            default:
-                throw new 'Invalid period name: ' + periodName;
-        }
+    var periodNameToPeriod = {
+        Weekly: PeriodicTask.period.oneWeek,
+        Biweekly: PeriodicTask.period.twoWeeks,
+        Monthly: PeriodicTask.period.oneMonth,
+        Bimonthly: PeriodicTask.period.twoMonths,
+        Semiannual: PeriodicTask.period.sixMonths,
+        Annual: PeriodicTask.period.oneYear,
     };
 
     var addNewBill = function () {
         var name = document.getElementById('editName').value;
-        var period = periodNameToPeriod(document.getElementById('editPeriod').value);
+        var period = periodNameToPeriod[document.getElementById('editPeriod').value];
         var dateDue = new Date(Date.parse(document.getElementById('editDueDate').value));
         var bill = new PeriodicTask({
             name: name,
