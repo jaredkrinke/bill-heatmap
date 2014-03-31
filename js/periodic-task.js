@@ -132,6 +132,14 @@ PeriodicTask.status = {
 PeriodicTask.nearPeriodDays = 3;
 PeriodicTask.wayPastPeriodDays = 7;
 
+PeriodicTask.getName = function () {
+    return this.properties.name;
+};
+
+PeriodicTask.getDueDate = function () {
+    return this.properties.dateDue;
+};
+
 PeriodicTask.prototype.getStatusForDate = function (date) {
     // TODO: Shouldn't this just compute the number of days difference instead of doing a bunch of addition/comparisons?
     var dateDue = this.properties.dateDue;
