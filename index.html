@@ -7,26 +7,39 @@
 </head>
 <body>
     <table id="bills">
-        <thead><tr><td>Paid</td><td>Bill</td><td>Last paid</td><td>Due date</td><td>Edit</td></tr></thead>
+        <thead><tr><td>Bill</td><td>Due date</td></tr></thead>
         <tbody>
-            <tr id="template"><td><input type="checkbox" /></td><td>Name</td><td>4/30/14</td><td>5/30/14</td><td>Edit</td></tr>
+            <tr id="template"><td>Name</td><td>4/30/14</td></tr>
+            <tr id="hint"><td colspan="2">Add a bill...</td></tr>
             <tr id="editTemplate">
-                <td><input type="checkbox" disabled="disabled" /></td>
-                <td><input id="editName" type="text" /></td>
-                <td>
-                    <select id="editPeriod">
-                        <option>Weekly</option>
-                        <option>Biweekly</option>
-                        <option>Monthly</option>
-                        <option>Bimonthly</option>
-                        <option>Semiannual</option>
-                        <option>Annual</option>
-                    </select>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>Name: </td>
+                            <td><input id="editName" type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td>Period: </td>
+                            <td>
+                                <select id="editPeriod">
+                                    <option>Weekly</option>
+                                    <option>Biweekly</option>
+                                    <option>Monthly</option>
+                                    <option>Bimonthly</option>
+                                    <option>Semiannual</option>
+                                    <option>Annual</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Due date: </td>
+                            <td><input id="editDueDate" type="text" /></td>
+                        </tr>
+                    </table>
+                    <p class="command">Save</p>
+                    <p class="command">Cancel</p>
                 </td>
-                <td><input id="editDueDate" type="text" /></td>
-                <td>Save</td>
             </tr>
-            <tr id="hint"><td colspan="5">Add a bill...</td></tr>
         </tbody>
     </table>
 </body>
