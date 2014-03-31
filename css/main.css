@@ -1,1 +1,23 @@
-﻿
+﻿#template {
+    visibility: collapse;
+}
+
+#updateTemplate {
+    visibility: collapse;
+}
+
+#editTemplate {
+    visibility: collapse;
+}
+
+#editTemplate.visible {
+    visibility: visible;
+}
+
+#addHint {
+    visibility: visible;
+}
+
+#addHint.hidden {
+    visibility: collapse;
+}

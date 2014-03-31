@@ -8,9 +8,14 @@
 <body>
     <table id="bills">
         <thead><tr><td>Bill</td><td>Due date</td></tr></thead>
-        <tbody>
+        <tbody id="billsBody">
             <tr id="template"><td>Name</td><td>4/30/14</td></tr>
-            <tr id="hint"><td colspan="2">Add a bill...</td></tr>
+            <tr id="updateTemplate">
+                <td colspan="2">
+                    <p class="command">Mark as paid</p>
+                    <p class="command">Edit...</p>
+                </td>
+            </tr>
             <tr id="editTemplate">
                 <td colspan="2">
                     <table>
@@ -36,10 +41,11 @@
                             <td><input id="editDueDate" type="text" /></td>
                         </tr>
                     </table>
-                    <p class="command">Save</p>
-                    <p class="command">Cancel</p>
+                    <p class="command"><a id="editSave">Save</a></p>
+                    <p class="command"><a id="editCancel">Cancel</a></p>
                 </td>
             </tr>
+            <tr id="addHint"><td colspan="2"><a id="add">Add a bill...</a></td></tr>
         </tbody>
     </table>
 </body>
