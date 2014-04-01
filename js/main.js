@@ -1,4 +1,7 @@
 ﻿window.onload = function () {
+    // TODO: Persist this data
+    var bills = [];
+
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
     var tbody = document.getElementById('billsBody');
     var editTemplate = document.getElementById('editTemplate');
@@ -33,7 +36,8 @@
             dateDue: dateDue
         });
 
-        // TODO: Store and show the bill
+        bills.push(bill);
+        // TODO: Update UI
     };
 
     // Map from anchor IDs to associated handlers
