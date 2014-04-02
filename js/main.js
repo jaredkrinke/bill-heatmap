@@ -27,6 +27,15 @@
         Annual: PeriodicTask.period.oneYear,
     };
 
+    var currentYear = Date.today().year();
+    var formatDate = function (date) {
+        var str = date.month() + '/' + date.day();
+        if (date.year() !== currentYear) {
+            str += '/' + date.year();
+        }
+        return str;
+    };
+
     var addNewBill = function () {
         var name = document.getElementById('editName').value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
@@ -45,8 +54,7 @@
         tdName.textContent = name;
         tr.appendChild(tdName);
         var tdDateDue = document.createElement('td');
-        // TODO: Format string with just date
-        tdDateDue.textContent = dateDue.toString();
+        tdDateDue.textContent = formatDate(dateDue);
         tr.appendChild(tdDateDue);
         tbody.insertBefore(tr, updateTemplate);
         // TODO: Enable updating
