@@ -4,6 +4,7 @@
 
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
     var tbody = document.getElementById('billsBody');
+    var updateTemplate = document.getElementById('updateTemplate');
     var editTemplate = document.getElementById('editTemplate');
     var addHint = document.getElementById('addHint');
 
@@ -37,7 +38,22 @@
         });
 
         bills.push(bill);
-        // TODO: Update UI
+        
+        // Update UI
+        var tr = document.createElement('tr');
+        var tdName = document.createElement('td');
+        tdName.textContent = name;
+        tr.appendChild(tdName);
+        var tdDateDue = document.createElement('td');
+        // TODO: Format string with just date
+        tdDateDue.textContent = dateDue.toString();
+        tr.appendChild(tdDateDue);
+        tbody.insertBefore(tr, updateTemplate);
+        // TODO: Enable updating
+        // TODO: Color based on status
+        // TODO: Sort based on due date?
+
+        hideEditor();
     };
 
     // Map from anchor IDs to associated handlers
