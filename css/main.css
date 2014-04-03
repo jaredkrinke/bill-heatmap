@@ -21,3 +21,23 @@
 #addHint.hidden {
     visibility: collapse;
 }
+
+tr.upToDate {
+    background-color: green;
+}
+
+tr.nearDue {
+    background-color: yellow;
+}
+
+tr.due {
+    background-color: orange;
+}
+
+tr.pastDue {
+    background-color: red;
+}
+
+tr.wayPastDue {
+    background-color: darkred;
+}

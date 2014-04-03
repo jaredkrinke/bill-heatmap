@@ -36,6 +36,11 @@
         return str;
     };
 
+    var statusToClass = [];
+    for (var statusName in PeriodicTask.status) {
+        statusToClass[PeriodicTask.status[statusName]] = statusName;
+    }
+
     var addNewBill = function () {
         var name = document.getElementById('editName').value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
@@ -57,8 +62,8 @@
         tdDateDue.textContent = formatDate(dateDue);
         tr.appendChild(tdDateDue);
         tbody.insertBefore(tr, updateTemplate);
+        tr.className = statusToClass[bill.getStatus()];
         // TODO: Enable updating
-        // TODO: Color based on status
         // TODO: Sort based on due date?
 
         hideEditor();
