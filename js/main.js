@@ -15,10 +15,10 @@
             tbody.insertBefore(editTemplate, activeTr.nextSibling);
 
             // Set the contents of the editor to match the item
-            // TODO: This doesn't actually work yet...
             document.getElementById('editName').value = activeBill.getName();
-            document.getElementById('editPeriod').value = periodToPeriodName[activeBill.getPeriod()];
-            document.getElementById('editDueDate').value = activeBill.getDueDate();
+            document.getElementById('editPeriod').selectedIndex = activeBill.getPeriod();
+            var date = activeBill.getDueDate();
+            document.getElementById('editDueDate').value = date.month() + '/' + date.day() + '/' + date.year();
         } else {
             tbody.insertBefore(editTemplate, addHint.nextSibling);
         }
@@ -54,6 +54,7 @@
 
         // Hide the new bill hint when updating a bill
         addHint.className = 'hidden';
+        // TODO: Also hide the edit template, if it's shown
     };
 
     var hideUpdateTemplate = function () {
