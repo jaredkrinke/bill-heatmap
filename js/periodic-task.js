@@ -132,11 +132,15 @@ PeriodicTask.status = {
 PeriodicTask.nearPeriodDays = 3;
 PeriodicTask.wayPastPeriodDays = 7;
 
-PeriodicTask.getName = function () {
+PeriodicTask.prototype.getName = function () {
     return this.properties.name;
 };
 
-PeriodicTask.getDueDate = function () {
+PeriodicTask.prototype.getPeriod = function () {
+    return this.properties.period;
+};
+
+PeriodicTask.prototype.getDueDate = function () {
     return this.properties.dateDue;
 };
 

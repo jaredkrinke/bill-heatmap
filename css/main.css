@@ -6,6 +6,10 @@
     visibility: collapse;
 }
 
+#updateTemplate.visible {
+    visibility: visible;
+}
+
 #editTemplate {
     visibility: collapse;
 }
