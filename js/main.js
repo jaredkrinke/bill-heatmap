@@ -21,14 +21,17 @@
             document.getElementById('editDueDate').value = date.month() + '/' + date.day() + '/' + date.year();
         } else {
             tbody.insertBefore(editTemplate, addHint.nextSibling);
+
+            // Reset the form
+            document.getElementById('editName').value = '';
+            document.getElementById('editPeriod').selectedIndex = PeriodicTask.period.oneMonth;
+            document.getElementById('editDueDate').value = '';
         }
 
         // Now show the template and hide the hint (and update form, in case it's visible)
         addHint.className = 'hidden';
         editTemplate.className = 'visible';
         updateTemplate.className = null;
-
-        // TODO: Reset the form?
     };
 
     var hideEditor = function () {
@@ -52,9 +55,9 @@
         activeBill = bill;
         activeTr = tr;
 
-        // Hide the new bill hint when updating a bill
+        // Hide the new bill hint (and the editor) when updating a bill
         addHint.className = 'hidden';
-        // TODO: Also hide the edit template, if it's shown
+        editTemplate.className = null;
     };
 
     var hideUpdateTemplate = function () {
@@ -106,6 +109,7 @@
             // TODO: Implement
         } else {
             // This is a new bill, so create it
+            // TODO: Validation
             var name = document.getElementById('editName').value;
             var period = periodNameToPeriod[document.getElementById('editPeriod').value];
             var dateDue = new Date(Date.parse(document.getElementById('editDueDate').value));
