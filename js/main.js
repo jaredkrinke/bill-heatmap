@@ -103,17 +103,31 @@
         };
     };
 
+    var updateRowForBill = function (bill, tr) {
+        tr.children[0].children[0].textContent = bill.getName();
+        tr.children[1].textContent = formatDate(bill.getDueDate());
+        tr.className = statusToClass[bill.getStatus()];
+    };
+
     var saveBill = function () {
+        // TODO: Validation
+        var name = document.getElementById('editName').value;
+        var period = periodNameToPeriod[document.getElementById('editPeriod').value];
+        var dateDue = new Date(Date.parse(document.getElementById('editDueDate').value));
+        var bill;
+        var tr;
+
         if (activeBill) {
             // Edit the active bill
-            // TODO: Implement
+            activeBill.setName(name);
+            activeBill.setPeriod(period);
+            activeBill.setDueDate(dateDue);
+
+            bill = activeBill;
+            tr = activeTr;
         } else {
             // This is a new bill, so create it
-            // TODO: Validation
-            var name = document.getElementById('editName').value;
-            var period = periodNameToPeriod[document.getElementById('editPeriod').value];
-            var dateDue = new Date(Date.parse(document.getElementById('editDueDate').value));
-            var bill = new PeriodicTask({
+            bill = new PeriodicTask({
                 name: name,
                 period: period,
                 dateDue: dateDue
@@ -121,18 +135,15 @@
 
             bills.push(bill);
 
-            // Update UI
-            var tr = document.createElement('tr');
+            // Create row
+            tr = document.createElement('tr');
             var tdName = document.createElement('td');
             var aName = document.createElement('a');
-            aName.textContent = name;
             tdName.appendChild(aName);
             tr.appendChild(tdName);
             var tdDateDue = document.createElement('td');
-            tdDateDue.textContent = formatDate(dateDue);
             tr.appendChild(tdDateDue);
             tbody.insertBefore(tr, updateTemplate);
-            tr.className = statusToClass[bill.getStatus()];
             // TODO: Sort based on due date?
 
             // Enable updating for the bill
@@ -141,12 +152,18 @@
             });
         }
 
+        // Populate columns and status
+        if (bill && tr) {
+            updateRowForBill(bill, tr);
+        }
+
         hideEditor();
     };
 
     var markPaid = function () {
         if (activeBill && activeTr) {
             // TODO: Implement
+            // TODO: Give the user an easy way to undo this change
         }
 
         hideUpdateTemplate();

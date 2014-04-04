@@ -136,12 +136,24 @@ PeriodicTask.prototype.getName = function () {
     return this.properties.name;
 };
 
+PeriodicTask.prototype.setName = function (name) {
+    this.properties.name = name;
+};
+
 PeriodicTask.prototype.getPeriod = function () {
     return this.properties.period;
 };
 
+PeriodicTask.prototype.setPeriod = function (period) {
+    this.properties.period = period;
+};
+
 PeriodicTask.prototype.getDueDate = function () {
     return this.properties.dateDue;
+};
+
+PeriodicTask.prototype.setDueDate = function (dateDue) {
+    this.properties.dateDue = dateDue;
 };
 
 PeriodicTask.prototype.getStatusForDate = function (date) {
