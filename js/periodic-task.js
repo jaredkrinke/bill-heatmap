@@ -185,6 +185,8 @@ PeriodicTask.prototype.complete = function (dateCompleted) {
     // Record when the task was completed
     this.properties.dateCompleted = dateCompleted;
 
+    // TODO: This logic doesn't actually work perfectly, for example: 1/31 -> 2/28 -> 3/28 (should be last day of the month)
+
     // Advanced the due date according to the period
     switch (this.properties.period) {
         case PeriodicTask.period.oneWeek:

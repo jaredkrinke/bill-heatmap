@@ -162,7 +162,8 @@
 
     var markPaid = function () {
         if (activeBill && activeTr) {
-            // TODO: Implement
+            activeBill.complete();
+            updateRowForBill(activeBill, activeTr);
             // TODO: Give the user an easy way to undo this change
         }
 
