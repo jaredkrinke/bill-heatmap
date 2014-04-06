@@ -109,7 +109,7 @@
         tr.className = statusToClass[bill.getStatus()];
     };
 
-    var createRow = function () {
+    var createRow = function (bill) {
         var tr = document.createElement('tr');
         var tdName = document.createElement('td');
         var aName = document.createElement('a');
@@ -153,13 +153,8 @@
             });
 
             bills.push(bill);
-            tr = createRow();
+            tr = createRow(bill);
             // TODO: Sort based on due date?
-
-            // Enable updating for the bill
-            addEventHandler(tr.children[0].children[0], function () {
-                showUpdateTemplate(bill, tr);
-            });
         }
 
         // Persist changes
@@ -212,7 +207,7 @@
     if (billsJSON) {
         bills = JSON.parse(billsJSON).map(function (billJSON) { return PeriodicTask.createFromJSON(billJSON); });
         for (var i = 0, count = bills.length; i < count; i++) {
-            updateRowForBill(bills[i], createRow());
+            updateRowForBill(bills[i], createRow(bills[i]));
         }
     } else {
         bills = [];
