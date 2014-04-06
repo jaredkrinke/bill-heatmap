@@ -1,29 +1,29 @@
 ﻿#template {
-    visibility: collapse;
+    display: none;
 }
 
 #updateTemplate {
-    visibility: collapse;
+    display: none;
 }
 
 #updateTemplate.visible {
-    visibility: visible;
+    display: inline;
 }
 
 #editTemplate {
-    visibility: collapse;
+    display: none;
 }
 
 #editTemplate.visible {
-    visibility: visible;
+    display: inline;
 }
 
 #addHint {
-    visibility: visible;
+    display: inline;
 }
 
 #addHint.hidden {
-    visibility: collapse;
+    display: none;
 }
 
 body {
