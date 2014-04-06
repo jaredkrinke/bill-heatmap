@@ -149,18 +149,18 @@ PeriodicTask.prototype.setPeriod = function (period) {
 };
 
 PeriodicTask.prototype.getDueDate = function () {
-    return this.properties.dateDue;
+    return this.properties.dueDate;
 };
 
-PeriodicTask.prototype.setDueDate = function (dateDue) {
-    this.properties.dateDue = dateDue;
+PeriodicTask.prototype.setDueDate = function (dueDate) {
+    this.properties.dueDate = dueDate;
 };
 
 PeriodicTask.prototype.getStatusForDate = function (date) {
     // TODO: Shouldn't this just compute the number of days difference instead of doing a bunch of addition/comparisons?
-    var dateDue = this.properties.dateDue;
-    if (dateDue) {
-        var daysUntilDue = Date.compareDates(dateDue, date);
+    var dueDate = this.properties.dueDate;
+    if (dueDate) {
+        var daysUntilDue = Date.compareDates(dueDate, date);
         if (daysUntilDue > PeriodicTask.nearPeriodDays) {
             return PeriodicTask.status.upToDate;
         } else if (daysUntilDue > 0) {
@@ -190,27 +190,27 @@ PeriodicTask.prototype.complete = function (dateCompleted) {
     // Advanced the due date according to the period
     switch (this.properties.period) {
         case PeriodicTask.period.oneWeek:
-            this.properties.dateDue = this.properties.dateDue.addDays(7);
+            this.properties.dueDate = this.properties.dueDate.addDays(7);
             break;
 
         case PeriodicTask.period.twoWeeks:
-            this.properties.dateDue = this.properties.dateDue.addDays(14);
+            this.properties.dueDate = this.properties.dueDate.addDays(14);
             break;
 
         case PeriodicTask.period.oneMonth:
-            this.properties.dateDue = this.properties.dateDue.addMonths(1);
+            this.properties.dueDate = this.properties.dueDate.addMonths(1);
             break;
 
         case PeriodicTask.period.twoMonths:
-            this.properties.dateDue = this.properties.dateDue.addMonths(2);
+            this.properties.dueDate = this.properties.dueDate.addMonths(2);
             break;
 
         case PeriodicTask.period.sixMonths:
-            this.properties.dateDue = this.properties.dateDue.addMonths(6);
+            this.properties.dueDate = this.properties.dueDate.addMonths(6);
             break;
 
         case PeriodicTask.period.oneYear:
-            this.properties.dateDue = this.properties.dateDue.addYears(1);
+            this.properties.dueDate = this.properties.dueDate.addYears(1);
             break;
 
         default:

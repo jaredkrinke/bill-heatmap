@@ -113,7 +113,7 @@
         // TODO: Validation
         var name = document.getElementById('editName').value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
-        var dateDue = new Date(Date.parse(document.getElementById('editDueDate').value));
+        var dueDate = new Date(Date.parse(document.getElementById('editDueDate').value));
         var bill;
         var tr;
 
@@ -121,7 +121,7 @@
             // Edit the active bill
             activeBill.setName(name);
             activeBill.setPeriod(period);
-            activeBill.setDueDate(dateDue);
+            activeBill.setDueDate(dueDate);
 
             bill = activeBill;
             tr = activeTr;
@@ -130,7 +130,7 @@
             bill = new PeriodicTask({
                 name: name,
                 period: period,
-                dateDue: dateDue
+                dueDate: dueDate
             });
 
             bills.push(bill);
@@ -141,8 +141,8 @@
             var aName = document.createElement('a');
             tdName.appendChild(aName);
             tr.appendChild(tdName);
-            var tdDateDue = document.createElement('td');
-            tr.appendChild(tdDateDue);
+            var tdDueDate = document.createElement('td');
+            tr.appendChild(tdDueDate);
             tbody.insertBefore(tr, updateTemplate);
             // TODO: Sort based on due date?
 
