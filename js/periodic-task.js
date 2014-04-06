@@ -134,6 +134,16 @@ PeriodicTask.status = {
 PeriodicTask.nearPeriodDays = 3;
 PeriodicTask.wayPastPeriodDays = 7;
 
+PeriodicTask.createFromJSON = function (json) {
+    var properties = JSON.parse(json);
+
+    // Dates are saved as strings, so convert them back here
+    properties.dueDate = new Date(properties.dueDate);
+    properties.originalDueDate = new Date(properties.originalDueDate);
+
+    return new PeriodicTask(properties);
+};
+
 PeriodicTask.prototype.resetCount = function () {
     this.properties.originalDueDate = this.properties.dueDate;
     this.properties.count = 0;
@@ -187,6 +197,10 @@ PeriodicTask.prototype.getStatusForDate = function (date) {
 
 PeriodicTask.prototype.getStatus = function () {
     return this.getStatusForDate(Date.today());
+};
+
+PeriodicTask.prototype.toJSON = function () {
+    return JSON.stringify(this.properties);
 };
 
 PeriodicTask.prototype.complete = function () {

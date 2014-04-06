@@ -1,6 +1,5 @@
 ﻿window.onload = function () {
-    // TODO: Persist this data
-    var bills = [];
+    var bills;
 
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
     var tbody = document.getElementById('billsBody');
@@ -110,6 +109,25 @@
         tr.className = statusToClass[bill.getStatus()];
     };
 
+    var createRow = function () {
+        var tr = document.createElement('tr');
+        var tdName = document.createElement('td');
+        var aName = document.createElement('a');
+        tdName.appendChild(aName);
+        tr.appendChild(tdName);
+        var tdDueDate = document.createElement('td');
+        tr.appendChild(tdDueDate);
+        tbody.insertBefore(tr, updateTemplate);
+        // TODO: Sort based on due date?
+
+        // Enable updating for the bill
+        addEventHandler(aName, function () {
+            showUpdateTemplate(bill, tr);
+        });
+
+        return tr;
+    };
+
     var saveBill = function () {
         // TODO: Validation
         var name = document.getElementById('editName').value;
@@ -135,23 +153,17 @@
             });
 
             bills.push(bill);
-
-            // Create row
-            tr = document.createElement('tr');
-            var tdName = document.createElement('td');
-            var aName = document.createElement('a');
-            tdName.appendChild(aName);
-            tr.appendChild(tdName);
-            var tdDueDate = document.createElement('td');
-            tr.appendChild(tdDueDate);
-            tbody.insertBefore(tr, updateTemplate);
+            tr = createRow();
             // TODO: Sort based on due date?
 
             // Enable updating for the bill
-            addEventHandler(aName, function () {
+            addEventHandler(tr.children[0].children[0], function () {
                 showUpdateTemplate(bill, tr);
             });
         }
+
+        // Persist changes
+        saveBills();
 
         // Populate columns and status
         if (bill && tr) {
@@ -164,6 +176,7 @@
     var markPaid = function () {
         if (activeBill && activeTr) {
             activeBill.complete();
+            saveBills();
             updateRowForBill(activeBill, activeTr);
             // TODO: Give the user an easy way to undo this change
             // TODO: Keep a history of payment dates?
@@ -180,6 +193,7 @@
         ['updateCancel', hideUpdateTemplate],
         ['editCancel', hideEditor],
         ['editSave', saveBill],
+        // TODO: Delete button
     ];
 
     // Setup event handling
@@ -191,4 +205,20 @@
             addEventHandler(anchor, handler);
         })(clickHandlers[i]);
     }
+
+    // Load or create bills list
+    var billsKey = 'bills';
+    var billsJSON = localStorage[billsKey];
+    if (billsJSON) {
+        bills = JSON.parse(billsJSON).map(function (billJSON) { return PeriodicTask.createFromJSON(billJSON); });
+        for (var i = 0, count = bills.length; i < count; i++) {
+            updateRowForBill(bills[i], createRow());
+        }
+    } else {
+        bills = [];
+    }
+
+    var saveBills = function () {
+        localStorage[billsKey] = JSON.stringify(bills.map(function (bill) { return bill.toJSON() }));
+    };
 };
