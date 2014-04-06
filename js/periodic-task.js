@@ -25,7 +25,6 @@
     Date.prototype.day = function () { return this.getDate(); };
 
     // Manipulation
-    // TODO: Subtraction?
     Date.prototype.addYears = function (years) {
         // Note: It looks like the Date constructor handles leap years internally (so there is no special logic here)
         return Date.create(this.year() + years, this.month(), this.day());
@@ -190,7 +189,6 @@ PeriodicTask.prototype.getStatus = function () {
     return this.getStatusForDate(Date.today());
 };
 
-// TODO: Keep a history of completions?
 PeriodicTask.prototype.complete = function () {
     // Record when the task was completed
     this.properties.count++;

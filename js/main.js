@@ -34,16 +34,19 @@
         updateTemplate.className = null;
     };
 
+    var activeBill = null;
+    var activeTr = null;
+    var setActive = function (bill, tr) {
+        activeBill = bill;
+        activeTr = tr;
+    };
+
     var hideEditor = function () {
         addHint.className = null;
         editTemplate.className = null;
-        // TODO: Move the active stuff to a helper so it's easier to search for
-        activeBill = null;
-        activeTr = null;
+        setActive(null);
     };
 
-    var activeBill = null;
-    var activeTr = null;
     var showUpdateTemplate = function (bill, tr) {
         // Show the update template
         tbody.removeChild(updateTemplate);
@@ -51,9 +54,7 @@
         updateTemplate.className = 'visible';
 
         // Note the current bill and row
-        // TODO: Is there a better way to handle this?
-        activeBill = bill;
-        activeTr = tr;
+        setActive(bill, tr);
 
         // Hide the new bill hint (and the editor) when updating a bill
         addHint.className = 'hidden';
@@ -165,6 +166,7 @@
             activeBill.complete();
             updateRowForBill(activeBill, activeTr);
             // TODO: Give the user an easy way to undo this change
+            // TODO: Keep a history of payment dates?
         }
 
         hideUpdateTemplate();
