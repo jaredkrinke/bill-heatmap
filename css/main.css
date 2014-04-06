@@ -26,22 +26,49 @@
     visibility: collapse;
 }
 
-tr.upToDate {
-    background-color: green;
+body {
+    font-family: sans-serif;
 }
 
-tr.nearDue {
-    background-color: yellow;
+tr.upToDate, tr.pastDue, tr.wayPastDue { color: white; }
+tr.upToDate a:link, tr.pastDue a:link, tr.wayPastDue a:link { color: white; }
+
+tr.nearDue, tr.due { color: black; }
+tr.nearDue a:link, tr.due a:link { color: black; }
+
+tr.upToDate { background-color: green; }
+tr.nearDue { background-color: yellow; }
+tr.due { background-color: orange; }
+tr.pastDue { background-color: red; }
+tr.wayPastDue { background-color: darkred; }
+
+#bills {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0px;
 }
 
-tr.due {
-    background-color: orange;
+#bills td {
+    border-width: 0px 0px 1px 0px;
+    border-color: black;
+    border-style: solid;
 }
 
-tr.pastDue {
-    background-color: red;
+#bills thead td {
+    font-weight: bold;
+    text-align: center;
+    border-width: 1px 0px 1px 0px;
 }
 
-tr.wayPastDue {
-    background-color: darkred;
+#bills td.date {
+    text-align: right;
+}
+
+ul { padding-left: 1em; }
+
+@media (min-width: 38em) {
+    #bills {
+        width: 38em;
+    }
 }

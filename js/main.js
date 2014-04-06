@@ -116,6 +116,7 @@
         tdName.appendChild(aName);
         tr.appendChild(tdName);
         var tdDueDate = document.createElement('td');
+        tdDueDate.className = 'date';
         tr.appendChild(tdDueDate);
         tbody.insertBefore(tr, updateTemplate);
         // TODO: Sort based on due date?
