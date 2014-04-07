@@ -6,6 +6,7 @@
     var tbody = document.getElementById('billsBody');
     var updateTemplate = document.getElementById('updateTemplate');
     var editTemplate = document.getElementById('editTemplate');
+    var deleteConfirm = document.getElementById('deleteConfirm');
     var addHint = document.getElementById('addHint');
 
     var showEditor = function () {
@@ -32,6 +33,7 @@
         addHint.className = 'invisible';
         editTemplate.className = 'visible';
         updateTemplate.className = 'invisible';
+        deleteConfirm.className = 'invisible';
     };
 
     var activeBill = null;
@@ -67,6 +69,34 @@
         activeTr = null;
 
         addHint.className = 'visible';
+    };
+
+    var showDeleteConfirm = function () {
+        if (activeBill && activeTr) {
+            tbody.removeChild(deleteConfirm);
+            tbody.insertBefore(deleteConfirm, activeTr.nextSibling);
+
+            deleteConfirm.className = 'visible';
+            editTemplate.className = 'invisible';
+        }
+    };
+
+    var hideDeleteConfirm = function () {
+        deleteConfirm.className = 'invisible';
+        addHint.className = 'visible';
+    };
+
+    var deleteActiveBill = function () {
+        if (activeBill && activeTr) {
+            var index = bills.indexOf(activeBill);
+            if (index >= 0) {
+                bills.splice(index, 1);
+                tbody.removeChild(activeTr);
+                saveBills();
+            }
+        }
+
+        hideDeleteConfirm();
     };
 
     var periodNameToPeriod = {
@@ -189,7 +219,9 @@
         ['updateCancel', hideUpdateTemplate],
         ['editCancel', hideEditor],
         ['editSave', saveBill],
-        // TODO: Delete button
+        ['editDelete', showDeleteConfirm],
+        ['deleteYes', deleteActiveBill],
+        ['deleteNo', hideDeleteConfirm],
     ];
 
     // Setup event handling
