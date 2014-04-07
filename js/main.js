@@ -119,7 +119,6 @@
         tdDueDate.className = 'date';
         tr.appendChild(tdDueDate);
         tbody.insertBefore(tr, updateTemplate);
-        // TODO: Sort based on due date?
 
         // Enable updating for the bill
         addEventHandler(aName, function () {
