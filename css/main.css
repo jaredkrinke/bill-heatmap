@@ -9,10 +9,8 @@
 body { font-family: sans-serif; }
 
 tr.upToDate, tr.pastDue, tr.wayPastDue { color: white; }
-tr.upToDate a:link, tr.pastDue a:link, tr.wayPastDue a:link { color: white; }
-
 tr.nearDue, tr.due { color: black; }
-tr.nearDue a:link, tr.due a:link { color: black; }
+tr a:link { color: inherit; }
 
 tr.upToDate { background-color: green; }
 tr.nearDue { background-color: yellow; }
@@ -35,10 +33,7 @@ tr.wayPastDue { background-color: darkred; }
     font-size: 125%;
 }
 
-#bills thead td {
-    font-weight: bold;
-    border-width: 1px 0px 1px 0px;
-}
+#bills thead td { border-width: 1px 0px; }
 
 #bills td.date { text-align: right; }
 
