@@ -10,7 +10,7 @@ body { font-family: sans-serif; }
 
 tr.upToDate, tr.pastDue, tr.wayPastDue { color: white; }
 tr.nearDue, tr.due { color: black; }
-tr a:link { color: inherit; }
+tr > td > a:link { color: inherit; }
 
 tr.upToDate { background-color: green; }
 tr.nearDue { background-color: yellow; }
