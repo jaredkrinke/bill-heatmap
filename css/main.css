@@ -1,10 +1,5 @@
-﻿#template { display: none; }
-#updateTemplate { display: none; }
-#updateTemplate.visible { display: inline; }
-#editTemplate { display: none; }
-#editTemplate.visible { display: inline; }
-#addHint { display: inline; }
-#addHint.hidden { display: none; }
+﻿tr.invisible { display: none; }
+tr.visible { display: inline; }
 
 body { font-family: sans-serif; }
 

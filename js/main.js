@@ -28,9 +28,9 @@
         }
 
         // Now show the template and hide the hint (and update form, in case it's visible)
-        addHint.className = 'hidden';
+        addHint.className = 'invisible';
         editTemplate.className = 'visible';
-        updateTemplate.className = null;
+        updateTemplate.className = 'invisible';
     };
 
     var activeBill = null;
@@ -41,8 +41,8 @@
     };
 
     var hideEditor = function () {
-        addHint.className = null;
-        editTemplate.className = null;
+        addHint.className = 'visible';
+        editTemplate.className = 'invisible';
         setActive(null);
     };
 
@@ -56,16 +56,16 @@
         setActive(bill, tr);
 
         // Hide the new bill hint (and the editor) when updating a bill
-        addHint.className = 'hidden';
-        editTemplate.className = null;
+        addHint.className = 'invisible';
+        editTemplate.className = 'invisible';
     };
 
     var hideUpdateTemplate = function () {
-        updateTemplate.className = null;
+        updateTemplate.className = 'invisible';
         activeBill = null;
         activeTr = null;
 
-        addHint.className = null;
+        addHint.className = 'visible';
     };
 
     var periodNameToPeriod = {
