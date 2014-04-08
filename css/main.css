@@ -2,6 +2,8 @@
 tr.visible { display: inline; }
 
 body { font-family: sans-serif; }
+body, td { font-size: 1.25em; }
+input, select { font-size: 100%; }
 
 tr.upToDate, tr.pastDue, tr.wayPastDue { color: white; }
 tr.nearDue, tr.due { color: black; }
@@ -20,12 +22,11 @@ tr.wayPastDue { background-color: darkred; }
     border-spacing: 0px;
 }
 
-#bills td {
+#bills > tbody > tr > td {
     border-width: 0px 0px 1px 0px;
     border-color: black;
     border-style: solid;
     padding: 0.5em 0.25em;
-    font-size: 125%;
 }
 
 #bills thead td { border-width: 1px 0px; }
