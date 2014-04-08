@@ -1,7 +1,4 @@
-﻿tr.invisible { display: none; }
-tr.visible { display: inline; }
-
-body { font-family: sans-serif; }
+﻿body { font-family: sans-serif; }
 body, td { font-size: 1.25em; }
 input, select { font-size: 100%; }
 

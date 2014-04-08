@@ -4,36 +4,51 @@
 
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
     var tbody = document.getElementById('billsBody');
+
     var updateTemplate = document.getElementById('updateTemplate');
     var editTemplate = document.getElementById('editTemplate');
     var deleteConfirm = document.getElementById('deleteConfirm');
     var addHint = document.getElementById('addHint');
 
-    var showEditor = function () {
-        // Move the editor as needed
-        tbody.removeChild(editTemplate);
-        if (activeBill && activeTr) {
-            tbody.insertBefore(editTemplate, activeTr.nextSibling);
+    var notifications = [
+        updateTemplate,
+        editTemplate,
+        deleteConfirm,
+        addHint,
+    ];
+    var interactive = document.getElementById('interactive');
 
+    var showNotification = function (notification, elementBefore) {
+        // Replace the current notification
+        while (interactive.childNodes.length > 0) {
+            interactive.removeChild(interactive.childNodes[0]);
+        }
+        interactive.appendChild(notification);
+
+        // Move the notification to the desired location
+        tbody.removeChild(interactive);
+        if (elementBefore) {
+            tbody.insertBefore(interactive, activeTr.nextSibling);
+        } else {
+            tbody.appendChild(interactive);
+        }
+    };
+
+    var showEditor = function () {
+        showNotification(editTemplate, activeTr);
+
+        if (activeBill && activeTr) {
             // Set the contents of the editor to match the item
             document.getElementById('editName').value = activeBill.getName();
             document.getElementById('editPeriod').selectedIndex = activeBill.getPeriod();
             var date = activeBill.getDueDate();
             document.getElementById('editDueDate').value = date.month() + '/' + date.day() + '/' + date.year();
         } else {
-            tbody.insertBefore(editTemplate, addHint.nextSibling);
-
             // Reset the form
             document.getElementById('editName').value = '';
             document.getElementById('editPeriod').selectedIndex = PeriodicTask.period.oneMonth;
             document.getElementById('editDueDate').value = '';
         }
-
-        // Now show the template and hide the hint (and update form, in case it's visible)
-        addHint.className = 'invisible';
-        editTemplate.className = 'visible';
-        updateTemplate.className = 'invisible';
-        deleteConfirm.className = 'invisible';
     };
 
     var activeBill = null;
@@ -44,46 +59,28 @@
     };
 
     var hideEditor = function () {
-        addHint.className = 'visible';
-        editTemplate.className = 'invisible';
         setActive(null);
+        showNotification(addHint, null);
     };
 
     var showUpdateTemplate = function (bill, tr) {
-        // Show the update template
-        tbody.removeChild(updateTemplate);
-        tbody.insertBefore(updateTemplate, tr.nextSibling);
-        updateTemplate.className = 'visible';
-
-        // Note the current bill and row
         setActive(bill, tr);
-
-        // Hide the new bill hint (and the editor) when updating a bill
-        addHint.className = 'invisible';
-        editTemplate.className = 'invisible';
+        showNotification(updateTemplate, tr);
     };
 
     var hideUpdateTemplate = function () {
-        updateTemplate.className = 'invisible';
-        activeBill = null;
-        activeTr = null;
-
-        addHint.className = 'visible';
+        setActive(null, null);
+        showNotification(addHint, null);
     };
 
     var showDeleteConfirm = function () {
         if (activeBill && activeTr) {
-            tbody.removeChild(deleteConfirm);
-            tbody.insertBefore(deleteConfirm, activeTr.nextSibling);
-
-            deleteConfirm.className = 'visible';
-            editTemplate.className = 'invisible';
+            showNotification(deleteConfirm, activeTr);
         }
     };
 
     var hideDeleteConfirm = function () {
-        deleteConfirm.className = 'invisible';
-        addHint.className = 'visible';
+        showNotification(addHint, null);
     };
 
     var deleteActiveBill = function () {
@@ -149,7 +146,7 @@
         var tdDueDate = document.createElement('td');
         tdDueDate.className = 'date';
         tr.appendChild(tdDueDate);
-        tbody.insertBefore(tr, updateTemplate);
+        tbody.appendChild(tr);
 
         // Enable updating for the bill
         addEventHandler(aName, function () {
@@ -249,4 +246,12 @@
     var saveBills = function () {
         localStorage[billsKey] = JSON.stringify(bills.map(function (bill) { return bill.toJSON() }));
     };
+
+    // Hide notifications on page load (they will be reinserted into the interactive area as needed
+    for (var i = 0, count = notifications.length; i < count; i++) {
+        notifications[i].removeNode(true);
+    }
+
+    // Start with the add hint showing
+    showNotification(addHint, null);
 };
