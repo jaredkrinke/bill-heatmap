@@ -156,44 +156,79 @@
         return tr;
     };
 
+    var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
+    var parseDate = function (dateString) {
+        // Try the US pattern first
+        if (datePattern.test(dateString)) {
+            var elements = dateString.split('/');
+            var month = elements[0];
+            var day = elements[1];
+            var year;
+            if (elements.length < 3) {
+                year = Date.today().year();
+            } else if (elements[2].length === 2) {
+                year = 2000 + parseInt(elements[2]);
+            } else {
+                year = elements[2];
+            }
+
+            return Date.create(year, month, day);
+        }
+
+        // Fall back to default parsing logic
+        var dateMS = Date.parse(dateString);
+        if (!isNan(dateMS)) {
+            return new Date(dateMS);
+        }
+
+        else return null;
+    };
+
+    var namePattern = /^(\w| ){1,25}$/i;
+
     var saveBill = function () {
-        // TODO: Validation
         var name = document.getElementById('editName').value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
-        var dueDate = new Date(Date.parse(document.getElementById('editDueDate').value));
-        var bill;
-        var tr;
+        var dueDate = parseDate(document.getElementById('editDueDate').value);
 
-        if (activeBill) {
-            // Edit the active bill
-            activeBill.setName(name);
-            activeBill.setPeriod(period);
-            activeBill.setDueDate(dueDate);
+        // Validation
+        if (namePattern.test(name) && period !== undefined && dueDate) {
+            var bill;
+            var tr;
 
-            bill = activeBill;
-            tr = activeTr;
+            if (activeBill) {
+                // Edit the active bill
+                activeBill.setName(name);
+                activeBill.setPeriod(period);
+                activeBill.setDueDate(dueDate);
+
+                bill = activeBill;
+                tr = activeTr;
+            } else {
+                // This is a new bill, so create it
+                bill = new PeriodicTask({
+                    name: name,
+                    period: period,
+                    dueDate: dueDate
+                });
+
+                bills.push(bill);
+                tr = createRow(bill);
+                // TODO: Sort based on due date?
+            }
+
+            // Persist changes
+            saveBills();
+
+            // Populate columns and status
+            if (bill && tr) {
+                updateRowForBill(bill, tr);
+            }
+
+            hideEditor();
         } else {
-            // This is a new bill, so create it
-            bill = new PeriodicTask({
-                name: name,
-                period: period,
-                dueDate: dueDate
-            });
-
-            bills.push(bill);
-            tr = createRow(bill);
-            // TODO: Sort based on due date?
+            // TODO: Show an error on validation failure
         }
-
-        // Persist changes
-        saveBills();
-
-        // Populate columns and status
-        if (bill && tr) {
-            updateRowForBill(bill, tr);
-        }
-
-        hideEditor();
     };
 
     var markPaid = function () {
