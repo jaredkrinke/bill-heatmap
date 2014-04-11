@@ -1,6 +1,6 @@
 ﻿window.onload = function () {
     // TODO: Add a cache manifest so the site works even without connectivity
-    var bills;
+    var bills = [];
 
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
     var tbody = document.getElementById('billsBody');
@@ -21,6 +21,7 @@
 
     var showNotification = function (notification, elementBefore) {
         // Replace the current notification
+        // TODO: This should probably be children (elements) and not childNodes (any node)
         while (interactive.childNodes.length > 0) {
             interactive.removeChild(interactive.childNodes[0]);
         }
@@ -147,7 +148,6 @@
         var tdDueDate = document.createElement('td');
         tdDueDate.className = 'date';
         tr.appendChild(tdDueDate);
-        tbody.appendChild(tr);
 
         // Enable updating for the bill
         addClickHandler(aName, function () {
@@ -185,6 +185,17 @@
         else return null;
     };
 
+    var addBillAndRow = function (bill) {
+        // Insert bills in order of due date
+        var dueDate = bill.getDueDate();
+        for (var index = 0, count = bills.length; index < count && Date.compareDates(dueDate, bills[index].getDueDate()) > 0; index++);
+
+        bills.splice(index, 0, bill);
+        tr = createRow(bill);
+        tbody.insertBefore(tr, tbody.children[index]);
+        updateRowForBill(bill, tr);
+    };
+
     var namePattern = /^(\w| ){1,25}$/i;
 
     var saveBill = function () {
@@ -194,38 +205,24 @@
 
         // Validation
         if (namePattern.test(name) && period !== undefined && dueDate) {
-            var bill;
-            var tr;
-
             if (activeBill) {
                 // Edit the active bill
                 activeBill.setName(name);
                 activeBill.setPeriod(period);
                 activeBill.setDueDate(dueDate);
 
-                bill = activeBill;
-                tr = activeTr;
+                updateRowForBill(activeBill, activeTr);
             } else {
                 // This is a new bill, so create it
-                bill = new PeriodicTask({
+                addBillAndRow(new PeriodicTask({
                     name: name,
                     period: period,
                     dueDate: dueDate
-                });
-
-                bills.push(bill);
-                tr = createRow(bill);
-                // TODO: Sort based on due date?
+                }));
             }
 
             // Persist changes
             saveBills();
-
-            // Populate columns and status
-            if (bill && tr) {
-                updateRowForBill(bill, tr);
-            }
-
             hideEditor();
         } else {
             // TODO: Show an error on validation failure
@@ -271,12 +268,10 @@
     var billsKey = 'bills';
     var billsJSON = localStorage[billsKey];
     if (billsJSON) {
-        bills = JSON.parse(billsJSON).map(function (billJSON) { return PeriodicTask.createFromJSON(billJSON); });
-        for (var i = 0, count = bills.length; i < count; i++) {
-            updateRowForBill(bills[i], createRow(bills[i]));
+        var savedBills = JSON.parse(billsJSON).map(function (billJSON) { return PeriodicTask.createFromJSON(billJSON); });
+        for (var i = 0, count = savedBills.length; i < count; i++) {
+            addBillAndRow(savedBills[i]);
         }
-    } else {
-        bills = [];
     }
 
     var saveBills = function () {
