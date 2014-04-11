@@ -21,9 +21,8 @@
 
     var showNotification = function (notification, elementBefore) {
         // Replace the current notification
-        // TODO: This should probably be children (elements) and not childNodes (any node)
-        while (interactive.childNodes.length > 0) {
-            interactive.removeChild(interactive.childNodes[0]);
+        while (interactive.children.length > 0) {
+            interactive.removeChild(interactive.children[0]);
         }
         interactive.appendChild(notification);
 
