@@ -9,6 +9,7 @@
     var editTemplate = document.getElementById('editTemplate');
     var deleteConfirm = document.getElementById('deleteConfirm');
     var addHint = document.getElementById('addHint');
+    var editDueDate = document.getElementById('editDueDate');
 
     var notifications = [
         updateTemplate,
@@ -42,12 +43,12 @@
             document.getElementById('editName').value = activeBill.getName();
             document.getElementById('editPeriod').selectedIndex = activeBill.getPeriod();
             var date = activeBill.getDueDate();
-            document.getElementById('editDueDate').value = date.month() + '/' + date.day() + '/' + date.year();
+            editDueDate.value = date.month() + '/' + date.day() + '/' + date.year();
         } else {
             // Reset the form
             document.getElementById('editName').value = '';
             document.getElementById('editPeriod').selectedIndex = PeriodicTask.period.oneMonth;
-            document.getElementById('editDueDate').value = '';
+            editDueDate.value = '';
         }
     };
 
@@ -123,7 +124,7 @@
         statusToClass[PeriodicTask.status[statusName]] = statusName;
     }
 
-    var addEventHandler = function (anchor, handler) {
+    var addClickHandler = function (anchor, handler) {
         anchor.href = '#';
         anchor.onclick = function () {
             handler();
@@ -149,7 +150,7 @@
         tbody.appendChild(tr);
 
         // Enable updating for the bill
-        addEventHandler(aName, function () {
+        addClickHandler(aName, function () {
             showUpdateTemplate(bill, tr);
         });
 
@@ -189,7 +190,7 @@
     var saveBill = function () {
         var name = document.getElementById('editName').value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
-        var dueDate = parseDate(document.getElementById('editDueDate').value);
+        var dueDate = parseDate(editDueDate.value);
 
         // Validation
         if (namePattern.test(name) && period !== undefined && dueDate) {
@@ -256,13 +257,13 @@
         ['deleteNo', hideDeleteConfirm],
     ];
 
-    // Setup event handling
+    // Setup click handling
     for (var i = 0, count = clickHandlers.length; i < count; i++) {
         (function (entry) {
             var id = entry[0];
             var handler = entry[1];
             var anchor = document.getElementById(id);
-            addEventHandler(anchor, handler);
+            addClickHandler(anchor, handler);
         })(clickHandlers[i]);
     }
 
