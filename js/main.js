@@ -9,6 +9,7 @@
     var editTemplate = document.getElementById('editTemplate');
     var deleteConfirm = document.getElementById('deleteConfirm');
     var addHint = document.getElementById('addHint');
+    var editName = document.getElementById('editName');
     var editDueDate = document.getElementById('editDueDate');
 
     var notifications = [
@@ -40,13 +41,13 @@
 
         if (activeBill && activeTr) {
             // Set the contents of the editor to match the item
-            document.getElementById('editName').value = activeBill.getName();
+            editName.value = activeBill.getName();
             document.getElementById('editPeriod').selectedIndex = activeBill.getPeriod();
             var date = activeBill.getDueDate();
             editDueDate.value = date.month() + '/' + date.day() + '/' + date.year();
         } else {
             // Reset the form
-            document.getElementById('editName').value = '';
+            editName.value = '';
             document.getElementById('editPeriod').selectedIndex = PeriodicTask.period.oneMonth;
             editDueDate.value = '';
         }
@@ -177,7 +178,7 @@
 
         // Fall back to default parsing logic
         var dateMS = Date.parse(dateString);
-        if (!isNan(dateMS)) {
+        if (!isNaN(dateMS)) {
             return new Date(dateMS);
         }
 
@@ -195,15 +196,19 @@
         updateRowForBill(bill, tr);
     };
 
-    var namePattern = /^(\w| ){1,25}$/i;
+    var namePattern = /^\w(\w| ){0,24}$/i;
 
     var saveBill = function () {
-        var name = document.getElementById('editName').value;
+        var name = editName.value;
         var period = periodNameToPeriod[document.getElementById('editPeriod').value];
         var dueDate = parseDate(editDueDate.value);
 
         // Validation
-        if (namePattern.test(name) && period !== undefined && dueDate) {
+        var nameValid = namePattern.test(name);
+        var periodValid = (period !== undefined);
+        var dueDateValid = !!dueDate;
+        valid = (nameValid && periodValid && dueDateValid);
+        if (valid) {
             if (activeBill) {
                 // Edit the active bill
                 activeBill.setName(name);
@@ -223,9 +228,11 @@
             // Persist changes
             saveBills();
             hideEditor();
-        } else {
-            // TODO: Show an error on validation failure
         }
+
+        // Update visual error states as needed
+        editName.className = (nameValid ? null : 'error');
+        editDueDate.className = (dueDateValid ? null : 'error');
     };
 
     var markPaid = function () {
