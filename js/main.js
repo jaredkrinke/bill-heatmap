@@ -1,4 +1,4 @@
-﻿window.onload = function () {
+﻿$(function () {
     // TODO: Add a cache manifest so the site works even without connectivity
     var bills = [];
 
@@ -291,4 +291,4 @@
 
     // Start with the add hint showing
     showNotification(addHint, null);
-};
+});
