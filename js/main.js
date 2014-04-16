@@ -58,10 +58,25 @@
         showNotification(addHint);
     };
 
-    var showUpdateTemplate = function (bill, div) {
-        setActive(bill, div);
-        showNotification(updateTemplate, div);
-    };
+    template.find('a.name').bind('click', function () {
+        var source = $(this);
+        var name = source.text();
+
+        // Find the corresponding bill
+        var bill;
+        for (var i = 0, count = bills.length; i < count; i++) {
+            if (bills[i].getName() === name) {
+                bill = bills[i];
+                break;
+            }
+        }
+
+        if (bill) {
+            var div = source.parents('div.row');
+            setActive(bill, div);
+            showNotification(updateTemplate, div);
+        }
+    });
 
     var hideUpdateTemplate = function () {
         setActive(null, null);
@@ -127,21 +142,13 @@
     };
 
     var updateRowForBill = function (bill, div) {
-        div.children('.name').text(bill.getName());
+        div.find('a.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
         div.removeClass().addClass(statusToClass[bill.getStatus()]);
     };
 
     var createRow = function (bill) {
-        var div = template.clone().show().appendTo(root);
-
-        // TODO
-        //// Enable updating for the bill
-        //addClickHandler(aName, function () {
-        //    showUpdateTemplate(bill, tr);
-        //});
-
-        return div;
+        return template.clone(true).show().appendTo(root);
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
