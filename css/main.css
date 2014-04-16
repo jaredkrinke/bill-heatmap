@@ -1,23 +1,26 @@
 ﻿body { font-family: sans-serif; }
-body, td { font-size: 1.25em; }
+/* TODO: Make font size 125% */
 input, select { font-size: 100%; }
 
-tr.upToDate, tr.pastDue, tr.wayPastDue { color: white; }
-tr.nearDue, tr.due { color: black; }
-tr > td > a:link { color: inherit; }
+div.upToDate, div.pastDue, div.wayPastDue { color: white; }
+div.nearDue, div.due { color: black; }
+div > a:link { color: inherit; }
 
-tr.upToDate { background-color: green; }
-tr.nearDue { background-color: yellow; }
-tr.due { background-color: orange; }
-tr.pastDue { background-color: red; }
-tr.wayPastDue { background-color: darkred; }
+div.upToDate { background-color: green; }
+div.nearDue { background-color: yellow; }
+div.due { background-color: orange; }
+div.pastDue { background-color: red; }
+div.wayPastDue { background-color: darkred; }
 
 input.error { background-color: yellow; }
 
-#bills {
+.table {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#bills {
     border-spacing: 0px;
 }
 
@@ -28,12 +31,15 @@ input.error { background-color: yellow; }
     padding: 0.5em 0.25em;
 }
 
-#bills thead td { border-width: 1px 0px; }
+div.header { border-width: 1px 0px; }
 
-#bills td.date { text-align: right; }
+div.date {
+    float: right;
+    text-align: right;
+}
 
 ul { padding-left: 1em; }
 
 @media (min-width: 38em) {
-    #bills { width: 38em; }
+    .table { width: 38em; }
 }

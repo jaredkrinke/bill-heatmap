@@ -8,61 +8,58 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <table id="bills">
-        <thead><tr><td>Bill</td><td class="date">Due date</td></tr></thead>
-        <tbody id="billsBody">
-            <tr id="interactive">
-                <td id="updateTemplate" colspan="2">
+    <div id="bills" class="table">
+        <div class="header"><span class="name">Bill</span><div class="date">Due Date</div></div>
+        <div id="template"><span class="name"></span><div class="date"></div></div>
+        <div id="updateTemplate">
+            <ul>
+                <li><a id="updatePaid">Mark as paid</a></li>
+                <li><a id="updateEdit">Edit...</a></li>
+                <li><a id="updateCancel">Cancel</a></li>
+            </ul>
+        </div>
+        <div id="editTemplate">
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td><input id="editName" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>Period: </td>
+                    <td>
+                        <select id="editPeriod">
+                            <option>Weekly</option>
+                            <option>Biweekly</option>
+                            <option>Monthly</option>
+                            <option>Bimonthly</option>
+                            <option>Semiannual</option>
+                            <option>Annual</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Due: </td>
+                    <td><input id="editDueDate" type="text" /></td>
+                </tr>
+            </table>
+            <ul>
+                <li><a id="editSave">Save</a></li>
+                <li><a id="editDelete">Delete</a></li>
+                <li><a id="editCancel">Cancel</a></li>
+            </ul>
+        </div>
+        <div id="deleteConfirm">
+            <ul>
+                <li>
+                    Delete this bill?
                     <ul>
-                        <li><a id="updatePaid">Mark as paid</a></li>
-                        <li><a id="updateEdit">Edit...</a></li>
-                        <li><a id="updateCancel">Cancel</a></li>
+                        <li><a id="deleteYes">Yes</a></li>
+                        <li><a id="deleteNo">No</a></li>
                     </ul>
-                </td>
-                <td id="editTemplate" colspan="2">
-                    <table>
-                        <tr>
-                            <td>Name: </td>
-                            <td><input id="editName" type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td>Period: </td>
-                            <td>
-                                <select id="editPeriod">
-                                    <option>Weekly</option>
-                                    <option>Biweekly</option>
-                                    <option>Monthly</option>
-                                    <option>Bimonthly</option>
-                                    <option>Semiannual</option>
-                                    <option>Annual</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Due: </td>
-                            <td><input id="editDueDate" type="text" /></td>
-                        </tr>
-                    </table>
-                    <ul>
-                        <li><a id="editSave">Save</a></li>
-                        <li><a id="editDelete">Delete</a></li>
-                        <li><a id="editCancel">Cancel</a></li>
-                    </ul>
-                </td>
-                <td id="deleteConfirm" colspan="2">
-                    <ul>
-                        <li>
-                            Delete this bill?
-                            <ul>
-                                <li><a id="deleteYes">Yes</a></li>
-                                <li><a id="deleteNo">No</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </td>
-                <td id="addHint" colspan="2"><ul><li><a id="add">Add a bill...</a></li></ul></td>
-            </tr>
-        </tbody>
-    </table>
+                </li>
+            </ul>
+        </div>
+        <div id="addHint"><ul><li><a id="add">Add a bill...</a></li></ul></div>
+    </div>
 </body>
 </html>
