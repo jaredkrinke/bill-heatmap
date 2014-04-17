@@ -225,9 +225,18 @@
         }
 
         // Update visual error states as needed
-        // TODO
-        //editName.className = (nameValid ? null : 'error');
-        //editDueDate.className = (dueDateValid ? null : 'error');
+        var validToElement = [
+            [nameValid, editName],
+            [dueDateValid, editDueDate],
+        ];
+        for (var i = 0, count = validToElement.length; i < count; i++) {
+            var pair = validToElement[i];
+            if (pair[0]) {
+                pair[1].removeClass('error');
+            } else {
+                pair[1].addClass('error');
+            }
+        }
     };
 
     var markPaid = function () {
