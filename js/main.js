@@ -12,6 +12,7 @@
     var addHint = $('#addHint');
     var editName = $('#editName');
     var editDueDate = $('#editDueDate');
+    var editPeriod = $('#editPeriod');
 
     var notifications = [
         updateTemplate,
@@ -42,13 +43,13 @@
         if (activeBill && activeDiv) {
             // Set the contents of the editor to match the item
             editName.val(activeBill.getName());
-            document.getElementById('editPeriod').selectedIndex = activeBill.getPeriod();
+            editPeriod.val(periodToPeriodName[activeBill.getPeriod()]);
             var date = activeBill.getDueDate();
             editDueDate.val(date.month() + '/' + date.day() + '/' + date.year());
         } else {
             // Reset the form
             editName.val('');
-            document.getElementById('editPeriod').selectedIndex = PeriodicTask.period.oneMonth;
+            editPeriod.val(periodToPeriodName[PeriodicTask.period.oneMonth]);
             editDueDate.val('');
         }
     };
@@ -193,7 +194,7 @@
 
     var saveBill = function () {
         var name = editName.val();
-        var period = periodNameToPeriod[document.getElementById('editPeriod').value];
+        var period = periodNameToPeriod[editPeriod.val()];
         var dueDate = parseDate(editDueDate.val());
 
         // Validation
