@@ -64,6 +64,7 @@
         var name = source.text();
 
         // Find the corresponding bill
+        // TODO: This assumes names are unique...
         var bill;
         for (var i = 0, count = bills.length; i < count; i++) {
             if (bills[i].getName() === name) {
@@ -99,7 +100,8 @@
             var index = bills.indexOf(activeBill);
             if (index >= 0) {
                 bills.splice(index, 1);
-                // TODO: Animate and remove
+                // TODO: Animate
+                activeDiv.remove();
                 saveBills();
             }
         }
@@ -145,11 +147,12 @@
     var updateRowForBill = function (bill, div) {
         div.find('a.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
-        div.removeClass().addClass(statusToClass[bill.getStatus()]);
+        // TODO: Figure out a way to not have to add back the row class...
+        div.removeClass().addClass('row').addClass(statusToClass[bill.getStatus()]);
     };
 
     var createRow = function (bill) {
-        return template.clone(true).show().appendTo(root);
+        return template.clone(true).appendTo(root).show();
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
