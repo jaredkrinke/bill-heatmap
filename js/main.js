@@ -28,10 +28,7 @@
         }
 
         // Move the notification to the desired location
-        // TODO: Why doesn't this work?
-        if (elementBefore) {
-            //notification.before(elementBefore);
-        }
+        notification.insertAfter(elementBefore ? elementBefore : $('div.row').last());
 
         notification.show();
     };
@@ -303,5 +300,5 @@
     }
 
     // Show the add hint by default
-    addHint.show();
+    showNotification(addHint);
 });
