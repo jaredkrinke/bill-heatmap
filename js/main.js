@@ -22,12 +22,18 @@
     ];
 
     var showNotification = function (notification, elementBefore) {
-        // TODO: Move the notification to the desired location
+        // TODO: Animation
         for (var i = 0, count = notifications.length; i < count; i++) {
-            notifications[i].slideUp();
+            notifications[i].hide();
         }
 
-        notification.slideDown();
+        // Move the notification to the desired location
+        // TODO: Why doesn't this work?
+        if (elementBefore) {
+            //notification.before(elementBefore);
+        }
+
+        notification.show();
     };
 
     var activeBill = null;
