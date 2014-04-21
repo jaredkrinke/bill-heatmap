@@ -24,14 +24,12 @@ input.error { background-color: yellow; }
     border-spacing: 0px;
 }
 
-#bills > tbody > tr > td {
+.table > div {
     border-width: 0px 0px 1px 0px;
     border-color: black;
     border-style: solid;
     padding: 0.5em 0.25em;
 }
-
-div.header { border-width: 1px 0px; }
 
 div.date {
     float: right;
