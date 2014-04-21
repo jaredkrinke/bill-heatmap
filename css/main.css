@@ -1,5 +1,5 @@
 ﻿body { font-family: sans-serif; }
-/* TODO: Make font size 125% */
+.table > div, td { font-size: 1.25em; }
 input, select { font-size: 100%; }
 
 div.upToDate, div.pastDue, div.wayPastDue { color: white; }
