@@ -62,25 +62,29 @@
         showNotification(addHint);
     };
 
-    template.find('a.name').bind('click', function () {
-        var source = $(this);
-        var name = source.text();
+    // TODO: Bind to the whole div instead?
+    template.find('a.name')
+        .attr('href', '#')
+        .bind('click', function (event) {
+            event.preventDefault();
+            var source = $(this);
+            var name = source.text();
 
-        // Find the corresponding bill
-        // TODO: This assumes names are unique...
-        var bill;
-        for (var i = 0, count = bills.length; i < count; i++) {
-            if (bills[i].getName() === name) {
-                bill = bills[i];
-                break;
+            // Find the corresponding bill
+            // TODO: This assumes names are unique...
+            var bill;
+            for (var i = 0, count = bills.length; i < count; i++) {
+                if (bills[i].getName() === name) {
+                    bill = bills[i];
+                    break;
+                }
             }
-        }
 
-        if (bill) {
-            var div = source.parents('div.row');
-            setActive(bill, div);
-            showNotification(updateTemplate, div);
-        }
+            if (bill) {
+                var div = source.parents('div.row');
+                setActive(bill, div);
+                showNotification(updateTemplate, div);
+            }
     });
 
     var hideUpdateTemplate = function () {
