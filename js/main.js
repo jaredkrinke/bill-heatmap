@@ -165,8 +165,15 @@
         div.removeClass(statusNamesConcatenated).addClass(statusToClass[bill.getStatus()]);
     };
 
-    var createRow = function (bill) {
-        return template.clone(true).appendTo(root).slideDown();
+    var createRow = function (bill, index) {
+        var row = template.clone(true);
+        var elementBefore = root.find('div.row').eq(index);
+        if (elementBefore) {
+            elementBefore.after(row);
+        } else {
+            root.append(row);
+        }
+        return row.slideDown();
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
@@ -203,7 +210,7 @@
         for (var index = 0, count = bills.length; index < count && Date.compareDates(dueDate, bills[index].getDueDate()) > 0; index++);
 
         bills.splice(index, 0, bill);
-        updateRowForBill(bill, createRow(bill));
+        updateRowForBill(bill, createRow(bill, index));
     };
 
     var namePattern = /^\w(\w| ){0,24}$/i;
