@@ -62,13 +62,10 @@
         showNotification(addHint);
     };
 
-    // TODO: Bind to the whole div instead?
-    template.find('a.name')
-        .attr('href', '#')
-        .bind('click', function (event) {
+    template.bind('click', function (event) {
             event.preventDefault();
             var source = $(this);
-            var name = source.text();
+            var name = source.find('span.name').text();
 
             // Find the corresponding bill
             // TODO: This assumes names are unique...
@@ -81,9 +78,8 @@
             }
 
             if (bill) {
-                var div = source.parents('div.row');
-                setActive(bill, div);
-                showNotification(updateTemplate, div);
+                setActive(bill, source);
+                showNotification(updateTemplate, source);
             }
     });
 
@@ -152,7 +148,7 @@
     };
 
     var updateRowForBill = function (bill, div) {
-        div.find('a.name').text(bill.getName());
+        div.find('span.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
         // TODO: Figure out a way to not have to add back the row class...
         div.removeClass().addClass('row').addClass(statusToClass[bill.getStatus()]);

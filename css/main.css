@@ -4,7 +4,6 @@ input, select { font-size: 100%; }
 
 div.upToDate, div.pastDue, div.wayPastDue { color: white; }
 div.nearDue, div.due { color: black; }
-div.row a:link { color: inherit; }
 
 div.upToDate { background-color: green; }
 div.nearDue { background-color: yellow; }
