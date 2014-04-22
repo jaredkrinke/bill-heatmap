@@ -21,16 +21,21 @@
         addHint,
     ];
 
+    // Disable animations during page load
+    $.fx.off = true;
+
     var showNotification = function (notification, elementBefore) {
-        // TODO: Animation
         for (var i = 0, count = notifications.length; i < count; i++) {
-            notifications[i].hide();
+            notifications[i].slideUp();
         }
 
         // Move the notification to the desired location
-        notification.insertAfter(elementBefore ? elementBefore : $('div.row').last());
+        notification.queue('fx', function (next) {
+            notification.insertAfter(elementBefore ? elementBefore : $('div.row').last());
+            next();
+        });
 
-        notification.show();
+        notification.slideDown();
     };
 
     var activeBill = null;
@@ -103,8 +108,12 @@
             var index = bills.indexOf(activeBill);
             if (index >= 0) {
                 bills.splice(index, 1);
-                // TODO: Animate
-                activeDiv.remove();
+                activeDiv.unbind()
+                    .slideUp({
+                        complete: function () {
+                            activeDiv.remove();
+                        }
+                    });
                 saveBills();
             }
         }
@@ -157,7 +166,7 @@
     };
 
     var createRow = function (bill) {
-        return template.clone(true).appendTo(root).show();
+        return template.clone(true).appendTo(root).slideDown();
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
@@ -194,7 +203,6 @@
         for (var index = 0, count = bills.length; index < count && Date.compareDates(dueDate, bills[index].getDueDate()) > 0; index++);
 
         bills.splice(index, 0, bill);
-        // TODO: Animate and add
         updateRowForBill(bill, createRow(bill));
     };
 
@@ -304,4 +312,7 @@
 
     // Show the add hint by default
     showNotification(addHint);
+
+    // Now that the page has loaded, turn on animations
+    $.fx.off = false;
 });
