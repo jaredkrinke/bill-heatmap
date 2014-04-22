@@ -134,10 +134,13 @@
         return str;
     };
 
+    var statusNames = [];
     var statusToClass = [];
     for (var statusName in PeriodicTask.status) {
+        statusNames.push(statusName);
         statusToClass[PeriodicTask.status[statusName]] = statusName;
     }
+    var statusNamesConcatenated = statusNames.join(' ');
 
     var addClickHandler = function (anchor, handler) {
         anchor.href = '#';
@@ -150,8 +153,7 @@
     var updateRowForBill = function (bill, div) {
         div.find('span.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
-        // TODO: Figure out a way to not have to add back the row class...
-        div.removeClass().addClass('row').addClass(statusToClass[bill.getStatus()]);
+        div.removeClass(statusNamesConcatenated).addClass(statusToClass[bill.getStatus()]);
     };
 
     var createRow = function (bill) {
