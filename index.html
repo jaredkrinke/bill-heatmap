@@ -11,55 +11,48 @@
     <div id="bills" class="table">
         <div class="header"><span class="name">Bill</span><div class="date">Due Date</div></div>
         <div id="template" class="row"><span class="name"></span><div class="date"></div></div>
-        <div id="updateTemplate">
-            <ul>
-                <li><a id="updatePaid">Mark as paid</a></li>
-                <li><a id="updateEdit">Edit...</a></li>
-                <li><a id="updateCancel">Cancel</a></li>
-            </ul>
+        <div class="menu" id="updateTemplate">
+            <div class="option" id="updatePaid">Mark as paid</div>
+            <div class="option" id="updateEdit">Edit...</div>
+            <div class="option" id="updateCancel">Cancel</div>
         </div>
-        <div id="editTemplate">
-            <table>
-                <tr>
-                    <td>Name: </td>
-                    <td><input id="editName" type="text" /></td>
-                </tr>
-                <tr>
-                    <td>Period: </td>
-                    <td>
-                        <select id="editPeriod">
-                            <option>Weekly</option>
-                            <option>Biweekly</option>
-                            <option>Monthly</option>
-                            <option>Bimonthly</option>
-                            <option>Semiannual</option>
-                            <option>Annual</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Due: </td>
-                    <td><input id="editDueDate" type="text" /></td>
-                </tr>
-            </table>
-            <ul>
-                <li><a id="editSave">Save</a></li>
-                <li><a id="editDelete">Delete</a></li>
-                <li><a id="editCancel">Cancel</a></li>
-            </ul>
+        <div class="menu" id="editTemplate">
+            <div>
+                <table>
+                    <tr>
+                        <td>Name: </td>
+                        <td><input id="editName" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>Period: </td>
+                        <td>
+                            <select id="editPeriod">
+                                <option>Weekly</option>
+                                <option>Biweekly</option>
+                                <option>Monthly</option>
+                                <option>Bimonthly</option>
+                                <option>Semiannual</option>
+                                <option>Annual</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Due: </td>
+                        <td><input id="editDueDate" type="text" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="option" id="editSave">Save</div>
+            <div class="option" id="editDelete">Delete</div>
+            <div class="option" id="editCancel">Cancel</div>
         </div>
-        <div id="deleteConfirm">
-            <ul>
-                <li>
-                    Delete this bill?
-                    <ul>
-                        <li><a id="deleteYes">Yes</a></li>
-                        <li><a id="deleteNo">No</a></li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="menu" id="deleteConfirm">
+            <div class="option" id="deleteYes">Delete this bill</div>
+            <div class="option" id="deleteNo">Cancel</div>
         </div>
-        <div id="addHint"><ul><li><a id="add">Add a bill...</a></li></ul></div>
+        <div class="menu" id="addHint">
+            <div class="option" id="add">Add a bill...</div>
+        </div>
     </div>
 </body>
 </html>
