@@ -70,17 +70,7 @@
     template.bind('click', function (event) {
             event.preventDefault();
             var source = $(this);
-            var name = source.find('span.name').text();
-
-            // Find the corresponding bill
-            // TODO: This assumes names are unique...
-            var bill;
-            for (var i = 0, count = bills.length; i < count; i++) {
-                if (bills[i].getName() === name) {
-                    bill = bills[i];
-                    break;
-                }
-            }
+            var bill = source.data('bill');
 
             if (bill) {
                 setActive(bill, source);
@@ -166,7 +156,8 @@
     };
 
     var createRow = function (bill, index) {
-        var row = template.clone(true);
+        var row = template.clone(true)
+            .data('bill', bill);
         var elementBefore = root.find('div.row').eq(index);
         if (elementBefore) {
             elementBefore.after(row);
