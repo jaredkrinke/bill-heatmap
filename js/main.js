@@ -289,7 +289,6 @@
     }
 
     // Load or create bills list
-    // TODO: On the live site there's a bug when there are no bills at page load
     var billsKey = 'bills';
     var billsJSON = localStorage[billsKey];
     if (billsJSON) {
