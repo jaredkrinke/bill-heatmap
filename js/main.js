@@ -141,14 +141,6 @@
     }
     var statusNamesConcatenated = statusNames.join(' ');
 
-    var addClickHandler = function (anchor, handler) {
-        anchor.href = '#';
-        anchor.onclick = function () {
-            handler();
-            return false;
-        };
-    };
-
     var updateRowForBill = function (bill, div) {
         div.find('span.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
@@ -265,27 +257,23 @@
         hideUpdateTemplate();
     };
 
-    // Map from anchor IDs to associated handlers
+    // Map from element IDs to associated handlers
     var clickHandlers = [
-        ['add', showEditor],
-        ['updatePaid', markPaid],
-        ['updateEdit', showEditor],
-        ['updateCancel', hideUpdateTemplate],
-        ['editCancel', hideEditor],
-        ['editSave', saveBill],
-        ['editDelete', showDeleteConfirm],
-        ['deleteYes', deleteActiveBill],
-        ['deleteNo', hideDeleteConfirm],
+        ['#add', showEditor],
+        ['#updatePaid', markPaid],
+        ['#updateEdit', showEditor],
+        ['#updateCancel', hideUpdateTemplate],
+        ['#editCancel', hideEditor],
+        ['#editSave', saveBill],
+        ['#editDelete', showDeleteConfirm],
+        ['#deleteYes', deleteActiveBill],
+        ['#deleteNo', hideDeleteConfirm],
     ];
 
     // Setup click handling
     for (var i = 0, count = clickHandlers.length; i < count; i++) {
-        (function (entry) {
-            var id = entry[0];
-            var handler = entry[1];
-            var anchor = document.getElementById(id);
-            addClickHandler(anchor, handler);
-        })(clickHandlers[i]);
+        var entry = clickHandlers[i];
+        $(entry[0]).click(entry[1]);
     }
 
     // Load or create bills list
