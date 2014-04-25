@@ -1,5 +1,4 @@
 ﻿$(function () {
-    // TODO: Add a cache manifest so the site works even without connectivity
     var bills = [];
 
     // TODO: Should weekday vs. weekend be taken into account for bills? It seems like it should...
