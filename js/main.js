@@ -249,8 +249,6 @@
             activeBill.complete();
             saveBills();
             updateRowForBill(activeBill, activeDiv);
-            // TODO: Give the user an easy way to undo this change
-            // TODO: Keep a history of payment dates?
         }
 
         hideUpdateTemplate();
