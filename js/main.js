@@ -135,12 +135,12 @@
     // Map states to table row styles
     var statusToClass = [];
     statusToClass[PeriodicTask.status.upToDate] = 'success';
-    statusToClass[PeriodicTask.status.nearDue] = 'info';
+    statusToClass[PeriodicTask.status.nearDue] = 'success';
     statusToClass[PeriodicTask.status.due] = 'warning';
     statusToClass[PeriodicTask.status.pastDue] = 'danger';
     statusToClass[PeriodicTask.status.wayPastDue] = 'danger';
 
-    var statusStylesConcatenated = ['success', 'info', 'warning', 'danger'].join(' ');
+    var statusStylesConcatenated = ['success', 'warning', 'danger'].join(' ');
 
     var updateRowForBill = function (bill, div) {
         div.find('.name').text(bill.getName());
