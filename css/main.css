@@ -27,8 +27,8 @@ input.error { background-color: yellow; }
     border-spacing: 0px;
 }
 
-div.row, div.option { cursor: pointer; }
-div.row, div.menu > div, div.header { padding: 0.5em 0.25em; }
+div.bill, div.option { cursor: pointer; }
+div.bill, div.menu > div, div.header { padding: 0.5em 0.25em; }
 
 .table > div {
     border-width: 0px 0px 1px 0px;

@@ -2,15 +2,17 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bill Heatmap</title>
-    <link rel="stylesheet" href="css/main.css" />
+    <!--<link rel="stylesheet" href="css/main.css" />-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="js/periodic-task.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
     <div id="bills" class="table">
         <div class="header"><span class="name">Bill</span><div class="date">Due Date</div></div>
-        <div id="template" class="row"><span class="name"></span><div class="date"></div></div>
+        <div id="template" class="bill"><span class="name"></span><div class="date"></div></div>
         <div class="menu" id="updateTemplate">
             <div class="option" id="updatePaid">Mark as paid</div>
             <div class="option" id="updateEdit">Edit...</div>

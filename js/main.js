@@ -30,7 +30,7 @@
 
         // Move the notification to the desired location
         notification.queue('fx', function (next) {
-            notification.insertAfter(elementBefore ? elementBefore : $('div.row').last());
+            notification.insertAfter(elementBefore ? elementBefore : $('div.bill').last());
             next();
         });
 
@@ -149,7 +149,7 @@
     var createRow = function (bill, index) {
         var row = template.clone(true)
             .data('bill', bill);
-        var elementBefore = root.find('div.row').eq(index);
+        var elementBefore = root.find('div.bill').eq(index);
         if (elementBefore) {
             elementBefore.after(row);
         } else {
