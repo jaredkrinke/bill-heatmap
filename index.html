@@ -11,6 +11,22 @@
 </head>
 <body>
     <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand">Brand</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li><a id="add">Add new bill</a></li>
+                    <li><a>Mark as paid</a></li>
+                    <li><a>Delete</a></li>
+                </ul>
+            </div>
+        </nav>
         <table class="table">
             <thead>
                 <tr>
@@ -65,7 +81,7 @@
             <div class="option" id="deleteNo">Cancel</div>
         </div>
         <div class="menu" id="addHint">
-            <div class="option" id="add">Add a bill...</div>
+            <div class="option">Add a bill...</div>
         </div>
     </div>
 </body>
