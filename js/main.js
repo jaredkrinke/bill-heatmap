@@ -134,13 +134,13 @@
 
     // Map states to table row styles
     var statusToClass = [];
-    statusToClass[PeriodicTask.status.upToDate] = 'success';
-    statusToClass[PeriodicTask.status.nearDue] = 'success';
-    statusToClass[PeriodicTask.status.due] = 'warning';
-    statusToClass[PeriodicTask.status.pastDue] = 'danger';
-    statusToClass[PeriodicTask.status.wayPastDue] = 'danger';
+    statusToClass[PeriodicTask.status.upToDate] = 'list-group-item-success';
+    statusToClass[PeriodicTask.status.nearDue] = 'list-group-item-success';
+    statusToClass[PeriodicTask.status.due] = 'list-group-item-warning';
+    statusToClass[PeriodicTask.status.pastDue] = 'list-group-item-danger';
+    statusToClass[PeriodicTask.status.wayPastDue] = 'list-group-item-danger';
 
-    var statusStylesConcatenated = ['success', 'warning', 'danger'].join(' ');
+    var statusStylesConcatenated = ['list-group-item-success', 'list-group-item-warning', 'list-group-item-danger'].join(' ');
 
     var updateRowForBill = function (bill, div) {
         div.find('.name').text(bill.getName());
@@ -151,13 +151,13 @@
     var createRow = function (bill, index) {
         var row = template.clone(true)
             .data('bill', bill);
-        var elementBefore = root.find('tr').eq(index);
+        var elementBefore = root.find('.bill').eq(index);
         if (elementBefore) {
             elementBefore.after(row);
         } else {
             root.append(row);
         }
-        return row.slideDown();
+        return row.show();
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;

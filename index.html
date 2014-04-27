@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">Brand</a>
+                <a class="navbar-brand">Bill Heatmap</a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -30,20 +30,10 @@
                 </ul>
             </div>
         </nav>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Bill</th>
-                    <th class="text-right">Due Date</th>
-                </tr>
-            </thead>
-            <tbody id="bills">
-                <tr id="template">
-                    <td class="name"></td>
-                    <td class="date text-right"></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="list-group" id="bills">
+            <div class="list-group-item"><strong>Bill</strong><span class="pull-right"><strong>Due Date</strong></span></div>
+            <a class="list-group-item bill" id="template"><span class="name"></span><span class="date badge"></span></a>
+        </div>
         <div class="menu" id="updateTemplate">
             <div class="option" id="updateEdit">Edit...</div>
             <div class="option" id="updateCancel">Cancel</div>
