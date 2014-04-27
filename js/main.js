@@ -132,24 +132,26 @@
         return str;
     };
 
-    var statusNames = [];
+    // Map states to table row styles
     var statusToClass = [];
-    for (var statusName in PeriodicTask.status) {
-        statusNames.push(statusName);
-        statusToClass[PeriodicTask.status[statusName]] = statusName;
-    }
-    var statusNamesConcatenated = statusNames.join(' ');
+    statusToClass[PeriodicTask.status.upToDate] = 'success';
+    statusToClass[PeriodicTask.status.nearDue] = 'info';
+    statusToClass[PeriodicTask.status.due] = 'warning';
+    statusToClass[PeriodicTask.status.pastDue] = 'danger';
+    statusToClass[PeriodicTask.status.wayPastDue] = 'danger';
+
+    var statusStylesConcatenated = ['success', 'info', 'warning', 'danger'].join(' ');
 
     var updateRowForBill = function (bill, div) {
-        div.find('span.name').text(bill.getName());
+        div.find('.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
-        div.removeClass(statusNamesConcatenated).addClass(statusToClass[bill.getStatus()]);
+        div.removeClass(statusStylesConcatenated).addClass(statusToClass[bill.getStatus()]);
     };
 
     var createRow = function (bill, index) {
         var row = template.clone(true)
             .data('bill', bill);
-        var elementBefore = root.find('div.bill').eq(index);
+        var elementBefore = root.find('tr').eq(index);
         if (elementBefore) {
             elementBefore.after(row);
         } else {
