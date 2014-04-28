@@ -5,19 +5,15 @@
     var root = $('#bills');
     var template = $('#template').hide();
 
-    var updateTemplate = $('#updateTemplate');
     var editTemplate = $('#editTemplate');
     var deleteConfirm = $('#deleteConfirm');
-    var addHint = $('#addHint');
     var editName = $('#editName');
     var editDueDate = $('#editDueDate');
     var editPeriod = $('#editPeriod');
 
     var notifications = [
-        updateTemplate,
         editTemplate,
         deleteConfirm,
-        addHint,
     ];
 
     // Disable animations during page load
@@ -40,8 +36,16 @@
     var activeBill = null;
     var activeDiv = null;
     var setActive = function (bill, div) {
+        if (activeDiv) {
+            activeDiv.removeClass('active');
+        }
+
         activeBill = bill;
         activeDiv = div;
+
+        if (activeDiv) {
+            activeDiv.addClass('active');
+        }
     };
 
     var showEditor = function () {
@@ -63,7 +67,6 @@
 
     var hideEditor = function () {
         setActive(null);
-        showNotification(addHint);
     };
 
     template.bind('click', function (event) {
@@ -73,14 +76,8 @@
 
             if (bill) {
                 setActive(bill, source);
-                showNotification(updateTemplate, source);
             }
     });
-
-    var hideUpdateTemplate = function () {
-        setActive(null, null);
-        showNotification(addHint);
-    };
 
     var showDeleteConfirm = function () {
         if (activeBill && activeDiv) {
@@ -252,8 +249,6 @@
             saveBills();
             updateRowForBill(activeBill, activeDiv);
         }
-
-        hideUpdateTemplate();
     };
 
     // Map from element IDs to associated handlers
@@ -261,7 +256,6 @@
         ['#add', showEditor],
         ['#updatePaid', markPaid],
         ['#updateEdit', showEditor],
-        ['#updateCancel', hideUpdateTemplate],
         ['#editCancel', hideEditor],
         ['#editSave', saveBill],
         ['#editDelete', showDeleteConfirm],
@@ -272,7 +266,7 @@
     // Setup click handling
     for (var i = 0, count = clickHandlers.length; i < count; i++) {
         var entry = clickHandlers[i];
-        $(entry[0]).click(entry[1]);
+        $(entry[0]).attr('href', '#').click(entry[1]);
     }
 
     // Load or create bills list
@@ -293,9 +287,6 @@
     for (var i = 0, count = notifications.length; i < count; i++) {
         notifications[i].hide();
     }
-
-    // Show the add hint by default
-    showNotification(addHint);
 
     // Now that the page has loaded, turn on animations
     $.fx.off = false;
