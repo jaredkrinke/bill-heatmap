@@ -50,10 +50,10 @@
         }
     };
 
-    var showEditor = function () {
-        showNotification(editTemplate, activeDiv);
+    var showEditor = function (add) {
+        showNotification(editTemplate, add ? null : activeDiv);
 
-        if (activeBill && activeDiv) {
+        if (!add && activeBill && activeDiv) {
             // Set the contents of the editor to match the item
             editName.val(activeBill.getName());
             editPeriod.val(periodToPeriodName[activeBill.getPeriod()]);
@@ -65,6 +65,10 @@
             editPeriod.val(periodToPeriodName[PeriodicTask.period.oneMonth]);
             editDueDate.val('');
         }
+    };
+
+    var showAddEditor = function () {
+        showEditor(true);
     };
 
     var hideEditor = function () {
@@ -255,7 +259,7 @@
 
     // Map from element IDs to associated handlers
     var clickHandlers = [
-        ['#add', showEditor],
+        ['#add', showAddEditor],
         ['#updatePaid', markPaid],
         ['#updateEdit', showEditor],
         ['#editSave', saveBill],
@@ -266,8 +270,12 @@
 
     // Setup click handling
     for (var i = 0, count = clickHandlers.length; i < count; i++) {
-        var entry = clickHandlers[i];
-        $(entry[0]).attr('href', '#').click(entry[1]);
+        (function (entry) {
+            $(entry[0]).attr('href', '#').click(function (event) {
+                event.preventDefault();
+                entry[1]();
+            });
+        })(clickHandlers[i]);
     }
 
     // Load or create bills list
