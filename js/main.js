@@ -25,12 +25,14 @@
         }
 
         // Move the notification to the desired location
-        notification.queue('fx', function (next) {
-            notification.insertAfter(elementBefore ? elementBefore : $('div.bill').last());
-            next();
-        });
+        if (notification) {
+            notification.queue('fx', function (next) {
+                notification.insertAfter(elementBefore ? elementBefore : $('div.bill').last());
+                next();
+            });
 
-        notification.slideDown();
+            notification.slideDown();
+        }
     };
 
     var activeBill = null;
@@ -86,7 +88,7 @@
     };
 
     var hideDeleteConfirm = function () {
-        showNotification(addHint);
+        showNotification(null, null);
     };
 
     var deleteActiveBill = function () {
