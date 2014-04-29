@@ -256,7 +256,6 @@
         ['#add', showEditor],
         ['#updatePaid', markPaid],
         ['#updateEdit', showEditor],
-        ['#editCancel', hideEditor],
         ['#editSave', saveBill],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
