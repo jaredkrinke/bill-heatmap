@@ -35,33 +35,25 @@
             <div class="list-group-item"><strong>Bill</strong><span class="pull-right"><strong>Due Date</strong></span></div>
             <a class="list-group-item bill" id="template"><span class="name"></span><span class="date badge"></span></a>
         </div>
-        <div class="menu" id="editTemplate">
-            <div>
-                <table>
-                    <tr>
-                        <td>Name: </td>
-                        <td><input id="editName" type="text" /></td>
-                    </tr>
-                    <tr>
-                        <td>Period: </td>
-                        <td>
-                            <select id="editPeriod">
-                                <option>Weekly</option>
-                                <option>Biweekly</option>
-                                <option>Monthly</option>
-                                <option>Bimonthly</option>
-                                <option>Semiannual</option>
-                                <option>Annual</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Due: </td>
-                        <td><input id="editDueDate" type="text" /></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="option" id="editSave">Save</div>
+        <div id="editTemplate">
+            <form role="form">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input class="form-control" id="editName" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="editPeriod">Period</label>
+                    <select class="form-control" id="editPeriod">
+                        <option>Weekly</option>
+                        <option>Biweekly</option>
+                        <option>Monthly</option>
+                        <option>Bimonthly</option>
+                        <option>Semiannual</option>
+                        <option>Annual</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-default" id="editSave">Save</button>
+            </form>
         </div>
         <div class="menu" id="deleteConfirm">
             <div class="option" id="deleteYes">Delete this bill</div>
