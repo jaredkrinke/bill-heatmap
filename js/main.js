@@ -262,7 +262,6 @@
         ['#add', showAddEditor],
         ['#updatePaid', markPaid],
         ['#updateEdit', showEditor],
-        ['#editSave', saveBill],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
         ['#deleteNo', hideDeleteConfirm],
@@ -277,6 +276,12 @@
             });
         })(clickHandlers[i]);
     }
+
+    // Setup form submission handling
+    $('#editForm').submit(function (event) {
+        event.preventDefault();
+        saveBill();
+    });
 
     // Load or create bills list
     var billsKey = 'bills';
