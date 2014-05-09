@@ -42,6 +42,10 @@
             activeDiv.removeClass('active');
         }
 
+        if (activeBill !== bill) {
+            showNotification(null, null);
+        }
+
         activeBill = bill;
         activeDiv = div;
 
