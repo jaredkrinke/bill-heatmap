@@ -27,7 +27,7 @@
         // Move the notification to the desired location
         if (notification) {
             notification.queue('fx', function (next) {
-                notification.insertAfter(elementBefore ? elementBefore : $('.bill').last());
+                notification.insertAfter(elementBefore ? elementBefore : $('#template'));
                 next();
             });
 
