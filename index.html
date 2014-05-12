@@ -31,6 +31,12 @@
                 </ul>
             </div>
         </nav>
+        <div id="deleteConfirm">
+            <form role="form">
+                <div class="form-group"><button type="button" class="btn btn-default" id="deleteYes">Delete this bill</button></div>
+                <div class="form-group"><button type="button" class="btn btn-default" id="deleteNo">Cancel</button></div>
+            </form>
+        </div>
         <div class="list-group" id="bills">
             <div class="list-group-item"><strong>Bill</strong><span class="pull-right"><strong>Due Date</strong></span></div>
             <a href="#" class="list-group-item bill" id="template"><span class="name"></span><span class="date badge"></span></a>
@@ -57,12 +63,6 @@
                     <input class="form-control" id="editDueDate" type="text" />
                 </div>
                 <button type="submit" class="btn btn-default">Save</button>
-            </form>
-        </div>
-        <div id="deleteConfirm">
-            <form role="form">
-                <div class="form-group"><button type="button" class="btn btn-default" id="deleteYes">Delete this bill</button></div>
-                <div class="form-group"><button type="button" class="btn btn-default" id="deleteNo">Cancel</button></div>
             </form>
         </div>
     </div>

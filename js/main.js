@@ -91,7 +91,7 @@
 
     var showDeleteConfirm = function () {
         if (activeBill && activeDiv) {
-            showNotification(deleteConfirm, activeDiv);
+            showNotification(deleteConfirm, null);
         }
     };
 
