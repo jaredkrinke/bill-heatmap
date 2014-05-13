@@ -19,7 +19,7 @@
     // Disable animations during page load
     $.fx.off = true;
 
-    var showNotification = function (notification, elementBefore) {
+    var showNotification = function (notification) {
         for (var i = 0, count = notifications.length; i < count; i++) {
             notifications[i].slideUp();
         }
@@ -27,7 +27,7 @@
         // Move the notification to the desired location
         if (notification) {
             notification.queue('fx', function (next) {
-                notification.insertAfter(elementBefore ? elementBefore : $('.navbar'));
+                notification.insertAfter($('.navbar'));
                 next();
             });
 
@@ -43,7 +43,7 @@
         }
 
         if (activeBill !== bill) {
-            showNotification(null, null);
+            showNotification(null);
         }
 
         activeBill = bill;
@@ -55,7 +55,7 @@
     };
 
     var showEditor = function (add) {
-        showNotification(editTemplate, add ? null : activeDiv);
+        showNotification(editTemplate);
 
         if (!add && activeBill && activeDiv) {
             // Set the contents of the editor to match the item
@@ -91,12 +91,12 @@
 
     var showDeleteConfirm = function () {
         if (activeBill && activeDiv) {
-            showNotification(deleteConfirm, null);
+            showNotification(deleteConfirm);
         }
     };
 
     var hideDeleteConfirm = function () {
-        showNotification(null, null);
+        showNotification(null);
     };
 
     var deleteActiveBill = function () {
