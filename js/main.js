@@ -104,14 +104,17 @@
             var index = bills.indexOf(activeBill);
             if (index >= 0) {
                 bills.splice(index, 1);
+                var removedDiv = activeDiv;
                 activeDiv.unbind()
                     .slideUp({
                         complete: function () {
-                            activeDiv.remove();
+                            removedDiv.remove();
                         }
                     });
                 saveBills();
             }
+
+            setActive(null, null);
         }
 
         hideDeleteConfirm();
