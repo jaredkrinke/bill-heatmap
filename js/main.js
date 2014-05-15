@@ -150,7 +150,7 @@
     statusToClass[PeriodicTask.status.pastDue] = 'list-group-item-danger';
     statusToClass[PeriodicTask.status.wayPastDue] = 'list-group-item-danger';
 
-    var statusStylesConcatenated = ['list-group-item-success', 'list-group-item-warning', 'list-group-item-danger'].join(' ');
+    var statusStylesConcatenated = 'list-group-item-success list-group-item-warning list-group-item-danger';
 
     var updateRowForBill = function (bill, div) {
         div.find('.name').text(bill.getName());
