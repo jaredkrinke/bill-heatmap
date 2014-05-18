@@ -1,0 +1,69 @@
+<html manifest="index.appcache">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bill Heatmap</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/periodic-task.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Bill Heatmap</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li><a id="add">Add new bill</a></li>
+                    <li><a id="updatePaid">Mark as paid</a></li>
+                    <li><a id="updateEdit">Edit</a></li>
+                    <li><a id="editDelete">Delete</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div id="deleteConfirm">
+            <form role="form">
+                <div class="form-group"><button type="button" class="btn btn-default" id="deleteYes">Delete this bill</button></div>
+                <div class="form-group"><button type="button" class="btn btn-default" id="deleteNo">Cancel</button></div>
+            </form>
+        </div>
+        <div class="list-group" id="bills">
+            <div class="list-group-item"><strong>Bill</strong><span class="pull-right"><strong>Due Date</strong></span></div>
+            <a href="#" class="list-group-item bill" id="template"><span class="name"></span><span class="date badge"></span></a>
+        </div>
+        <div id="editTemplate">
+            <form role="form" id="editForm">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input class="form-control" id="editName" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="editPeriod">Period</label>
+                    <select class="form-control" id="editPeriod">
+                        <option>Weekly</option>
+                        <option>Biweekly</option>
+                        <option>Monthly</option>
+                        <option>Bimonthly</option>
+                        <option>Semiannual</option>
+                        <option>Annual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editDueDate">Due Date</label>
+                    <input class="form-control" id="editDueDate" type="text" />
+                </div>
+                <button type="submit" class="btn btn-default">Save</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
