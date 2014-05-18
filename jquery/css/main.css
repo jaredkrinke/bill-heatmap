@@ -1,0 +1,57 @@
+﻿body {
+    font-family: sans-serif;
+    margin: 0.25em 0px 0px 0px;
+}
+
+.table > div, td { font-size: 1.25em; }
+input, select { font-size: 100%; }
+
+div.upToDate, div.pastDue, div.wayPastDue { color: white; }
+div.nearDue, div.due { color: black; }
+
+div.upToDate { background-color: green; }
+div.nearDue { background-color: yellow; }
+div.due { background-color: orange; }
+div.pastDue { background-color: red; }
+div.wayPastDue { background-color: darkred; }
+
+input.error { background-color: yellow; }
+
+.table {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#bills {
+    border-spacing: 0px;
+}
+
+div.row, div.option { cursor: pointer; }
+div.row, div.menu > div, div.header { padding: 0.5em 0.25em; }
+
+.table > div {
+    border-width: 0px 0px 1px 0px;
+    border-color: black;
+    border-style: solid;
+}
+
+div.date {
+    float: right;
+    text-align: right;
+}
+
+div.menu > div {
+    border-style: solid;
+    border-width: 1px 0px 0px 0.5em;
+    border-color: gray;
+    background-color: #d0d0d0;
+}
+
+div.menu > div:first-of-type { border-top-width: 0px; }
+div.option:hover { background-color: #e0e0e0; }
+div.option:active { background-color: #f0f0f0; }
+
+@media (min-width: 38em) {
+    .table { width: 38em; }
+}
