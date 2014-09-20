@@ -77,6 +77,7 @@
     };
 
     var showAddEditor = function () {
+        setActive(null);
         showEditor(true);
     };
 
