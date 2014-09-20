@@ -43,7 +43,7 @@
         }
 
         if (activeBill !== bill) {
-            showNotification(null);
+            hideEditor();
         }
 
         activeBill = bill;
@@ -55,19 +55,24 @@
     };
 
     var showEditor = function (add) {
-        showNotification(editTemplate);
-
+        var valid = false;
         if (!add && activeBill && activeDiv) {
             // Set the contents of the editor to match the item
             editName.val(activeBill.getName());
             editPeriod.val(periodToPeriodName[activeBill.getPeriod()]);
             var date = activeBill.getDueDate();
             editDueDate.val(date.month() + '/' + date.day() + '/' + date.year());
-        } else {
+            valid = true;
+        } else if (add) {
             // Reset the form
             editName.val('');
             editPeriod.val(periodToPeriodName[PeriodicTask.period.oneMonth]);
             editDueDate.val('');
+            valid = true;
+        }
+
+        if (valid) {
+            showNotification(editTemplate);
         }
     };
 
@@ -75,7 +80,15 @@
         showEditor(true);
     };
 
+    var showUpdateEditor = function () {
+        showEditor(false);
+    };
+
     var hideEditor = function () {
+        showNotification(null);
+    };
+
+    var closeEditor = function () {
         setActive(null);
     };
 
@@ -238,7 +251,7 @@
 
             // Persist changes
             saveBills();
-            hideEditor();
+            closeEditor();
         }
 
         // Update visual error states as needed
@@ -268,10 +281,11 @@
     var clickHandlers = [
         ['#add', showAddEditor],
         ['#updatePaid', markPaid],
-        ['#updateEdit', showEditor],
+        ['#updateEdit', showUpdateEditor],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
         ['#deleteNo', hideDeleteConfirm],
+        ['#cancel', hideEditor],
     ];
 
     // Setup click handling
