@@ -12,38 +12,11 @@
     var editDueDate = $('#editDueDate');
     var editPeriod = $('#editPeriod');
 
-    var notifications = [
-        editTemplate,
-    ];
-
-    // Disable animations during page load
-    $.fx.off = true;
-
-    var showNotification = function (notification) {
-        for (var i = 0, count = notifications.length; i < count; i++) {
-            notifications[i].slideUp();
-        }
-
-        // Move the notification to the desired location
-        if (notification) {
-            notification.queue('fx', function (next) {
-                notification.insertAfter($('.navbar'));
-                next();
-            });
-
-            notification.slideDown();
-        }
-    };
-
     var activeBill = null;
     var activeDiv = null;
     var setActive = function (bill, div) {
         if (activeDiv) {
             activeDiv.removeClass('active');
-        }
-
-        if (activeBill !== bill) {
-            hideEditor();
         }
 
         activeBill = bill;
@@ -72,7 +45,7 @@
         }
 
         if (valid) {
-            showNotification(editTemplate);
+            editTemplate.modal();
         }
     };
 
@@ -85,12 +58,8 @@
         showEditor(false);
     };
 
-    var hideEditor = function () {
-        showNotification(null);
-    };
-
     var closeEditor = function () {
-        setActive(null);
+        editTemplate.modal('hide');
     };
 
     template.bind('click', function (event) {
@@ -281,7 +250,6 @@
         ['#updateEdit', showUpdateEditor],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
-        ['#cancel', hideEditor],
     ];
 
     // Setup click handling
@@ -313,12 +281,4 @@
     var saveBills = function () {
         localStorage[billsKey] = JSON.stringify(bills.map(function (bill) { return bill.toJSON() }));
     };
-
-    // Hide notifications on page load
-    for (var i = 0, count = notifications.length; i < count; i++) {
-        notifications[i].hide();
-    }
-
-    // Now that the page has loaded, turn on animations
-    $.fx.off = false;
 });
