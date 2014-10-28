@@ -7,13 +7,13 @@
 
     var editTemplate = $('#editTemplate');
     var deleteConfirm = $('#deleteConfirm');
+    var deleteConfirmDialog = $('#deleteConfirmDialog');
     var editName = $('#editName');
     var editDueDate = $('#editDueDate');
     var editPeriod = $('#editPeriod');
 
     var notifications = [
         editTemplate,
-        deleteConfirm,
     ];
 
     // Disable animations during page load
@@ -105,12 +105,8 @@
 
     var showDeleteConfirm = function () {
         if (activeBill && activeDiv) {
-            showNotification(deleteConfirm);
+            deleteConfirmDialog.modal();
         }
-    };
-
-    var hideDeleteConfirm = function () {
-        showNotification(null);
     };
 
     var deleteActiveBill = function () {
@@ -131,7 +127,7 @@
             setActive(null, null);
         }
 
-        hideDeleteConfirm();
+        deleteConfirmDialog.modal('hide');
     };
 
     var periodNameToPeriod = {
@@ -285,7 +281,6 @@
         ['#updateEdit', showUpdateEditor],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
-        ['#deleteNo', hideDeleteConfirm],
         ['#cancel', hideEditor],
     ];
 
