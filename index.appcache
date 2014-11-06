@@ -1,8 +1,10 @@
 ﻿CACHE MANIFEST
+# Version: 2
 
 CACHE:
-css/main.css
 js/main.js
 js/periodic-task.js
 index.html
 http://code.jquery.com/jquery-1.11.0.min.js
+http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css
+http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js

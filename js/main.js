@@ -5,65 +5,61 @@
     var root = $('#bills');
     var template = $('#template').hide();
 
-    var updateTemplate = $('#updateTemplate');
     var editTemplate = $('#editTemplate');
     var deleteConfirm = $('#deleteConfirm');
-    var addHint = $('#addHint');
+    var deleteConfirmDialog = $('#deleteConfirmDialog');
     var editName = $('#editName');
     var editDueDate = $('#editDueDate');
     var editPeriod = $('#editPeriod');
 
-    var notifications = [
-        updateTemplate,
-        editTemplate,
-        deleteConfirm,
-        addHint,
-    ];
-
-    // Disable animations during page load
-    $.fx.off = true;
-
-    var showNotification = function (notification, elementBefore) {
-        for (var i = 0, count = notifications.length; i < count; i++) {
-            notifications[i].slideUp();
-        }
-
-        // Move the notification to the desired location
-        notification.queue('fx', function (next) {
-            notification.insertAfter(elementBefore ? elementBefore : $('div.row').last());
-            next();
-        });
-
-        notification.slideDown();
-    };
-
     var activeBill = null;
     var activeDiv = null;
     var setActive = function (bill, div) {
+        if (activeDiv) {
+            activeDiv.removeClass('active');
+        }
+
         activeBill = bill;
         activeDiv = div;
+
+        if (activeDiv) {
+            activeDiv.addClass('active');
+        }
     };
 
-    var showEditor = function () {
-        showNotification(editTemplate, activeDiv);
-
-        if (activeBill && activeDiv) {
+    var showEditor = function (add) {
+        var valid = false;
+        if (!add && activeBill && activeDiv) {
             // Set the contents of the editor to match the item
             editName.val(activeBill.getName());
             editPeriod.val(periodToPeriodName[activeBill.getPeriod()]);
             var date = activeBill.getDueDate();
             editDueDate.val(date.month() + '/' + date.day() + '/' + date.year());
-        } else {
+            valid = true;
+        } else if (add) {
             // Reset the form
             editName.val('');
             editPeriod.val(periodToPeriodName[PeriodicTask.period.oneMonth]);
             editDueDate.val('');
+            valid = true;
+        }
+
+        if (valid) {
+            editTemplate.modal();
         }
     };
 
-    var hideEditor = function () {
+    var showAddEditor = function () {
         setActive(null);
-        showNotification(addHint);
+        showEditor(true);
+    };
+
+    var showUpdateEditor = function () {
+        showEditor(false);
+    };
+
+    var closeEditor = function () {
+        editTemplate.modal('hide');
     };
 
     template.bind('click', function (event) {
@@ -73,23 +69,13 @@
 
             if (bill) {
                 setActive(bill, source);
-                showNotification(updateTemplate, source);
             }
     });
 
-    var hideUpdateTemplate = function () {
-        setActive(null, null);
-        showNotification(addHint);
-    };
-
     var showDeleteConfirm = function () {
         if (activeBill && activeDiv) {
-            showNotification(deleteConfirm, activeDiv);
+            deleteConfirmDialog.modal();
         }
-    };
-
-    var hideDeleteConfirm = function () {
-        showNotification(addHint);
     };
 
     var deleteActiveBill = function () {
@@ -97,17 +83,20 @@
             var index = bills.indexOf(activeBill);
             if (index >= 0) {
                 bills.splice(index, 1);
+                var removedDiv = activeDiv;
                 activeDiv.unbind()
                     .slideUp({
                         complete: function () {
-                            activeDiv.remove();
+                            removedDiv.remove();
                         }
                     });
                 saveBills();
             }
+
+            setActive(null, null);
         }
 
-        hideDeleteConfirm();
+        deleteConfirmDialog.modal('hide');
     };
 
     var periodNameToPeriod = {
@@ -132,30 +121,32 @@
         return str;
     };
 
-    var statusNames = [];
+    // Map states to table row styles
     var statusToClass = [];
-    for (var statusName in PeriodicTask.status) {
-        statusNames.push(statusName);
-        statusToClass[PeriodicTask.status[statusName]] = statusName;
-    }
-    var statusNamesConcatenated = statusNames.join(' ');
+    statusToClass[PeriodicTask.status.upToDate] = 'list-group-item-success';
+    statusToClass[PeriodicTask.status.nearDue] = 'list-group-item-success';
+    statusToClass[PeriodicTask.status.due] = 'list-group-item-warning';
+    statusToClass[PeriodicTask.status.pastDue] = 'list-group-item-danger';
+    statusToClass[PeriodicTask.status.wayPastDue] = 'list-group-item-danger';
+
+    var statusStylesConcatenated = 'list-group-item-success list-group-item-warning list-group-item-danger';
 
     var updateRowForBill = function (bill, div) {
-        div.find('span.name').text(bill.getName());
+        div.find('.name').text(bill.getName());
         div.children('.date').text(formatDate(bill.getDueDate()));
-        div.removeClass(statusNamesConcatenated).addClass(statusToClass[bill.getStatus()]);
+        div.removeClass(statusStylesConcatenated).addClass(statusToClass[bill.getStatus()]);
     };
 
     var createRow = function (bill, index) {
         var row = template.clone(true)
             .data('bill', bill);
-        var elementBefore = root.find('div.row').eq(index);
+        var elementBefore = root.find('.bill').eq(index);
         if (elementBefore) {
             elementBefore.after(row);
         } else {
             root.append(row);
         }
-        return row.slideDown();
+        return row.show();
     };
 
     var datePattern = /^\d{1,2}\/\d{1,2}(\/(\d{2}|\d{4}))?$/i;
@@ -226,7 +217,7 @@
 
             // Persist changes
             saveBills();
-            hideEditor();
+            closeEditor();
         }
 
         // Update visual error states as needed
@@ -249,31 +240,33 @@
             activeBill.complete();
             saveBills();
             updateRowForBill(activeBill, activeDiv);
-            // TODO: Give the user an easy way to undo this change
-            // TODO: Keep a history of payment dates?
         }
-
-        hideUpdateTemplate();
     };
 
     // Map from element IDs to associated handlers
     var clickHandlers = [
-        ['#add', showEditor],
+        ['#add', showAddEditor],
         ['#updatePaid', markPaid],
-        ['#updateEdit', showEditor],
-        ['#updateCancel', hideUpdateTemplate],
-        ['#editCancel', hideEditor],
-        ['#editSave', saveBill],
+        ['#updateEdit', showUpdateEditor],
         ['#editDelete', showDeleteConfirm],
         ['#deleteYes', deleteActiveBill],
-        ['#deleteNo', hideDeleteConfirm],
     ];
 
     // Setup click handling
     for (var i = 0, count = clickHandlers.length; i < count; i++) {
-        var entry = clickHandlers[i];
-        $(entry[0]).click(entry[1]);
+        (function (entry) {
+            $(entry[0]).attr('href', '#').click(function (event) {
+                event.preventDefault();
+                entry[1]();
+            });
+        })(clickHandlers[i]);
     }
+
+    // Setup form submission handling
+    $('#editForm').submit(function (event) {
+        event.preventDefault();
+        saveBill();
+    });
 
     // Load or create bills list
     var billsKey = 'bills';
@@ -288,15 +281,4 @@
     var saveBills = function () {
         localStorage[billsKey] = JSON.stringify(bills.map(function (bill) { return bill.toJSON() }));
     };
-
-    // Hide notifications on page load
-    for (var i = 0, count = notifications.length; i < count; i++) {
-        notifications[i].hide();
-    }
-
-    // Show the add hint by default
-    showNotification(addHint);
-
-    // Now that the page has loaded, turn on animations
-    $.fx.off = false;
 });
